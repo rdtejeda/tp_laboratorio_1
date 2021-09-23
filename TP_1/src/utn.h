@@ -10,7 +10,7 @@
 
 int imprimirMenu();
 int pedirNumeroIntconMaxyMin(int* px, int min, int max, int intentos, char* txt, char* txtError);
-int pedirNumeroFloat(float* px, int intentos, char* txt, char* txtError);
+int pedirNumeroFloat(float* pResultado, char* mensaje, char* mensajeError, int reintentos);
 int sumaFloat(float* z, float x, float y);
 int restaFloat(float* z, float x, float y);
 int multiplicacionFloat(float* z, float x, float y);

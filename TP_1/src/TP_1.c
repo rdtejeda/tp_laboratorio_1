@@ -4,8 +4,7 @@
  Author      : TEJEDA Roberto Daniel
  Description :
  Enunciado
-	Hacer una calculadora.
-	Para ello el programa iniciará y contará con un menú de opciones:
+	Hacer una calculadora.Para ello el programa iniciará y contará con un menú de opciones:
 	1. Ingresar 1er operando (A=x)
 	2. Ingresar 2do operando (B=y)
 	3. Calcular todas las operaciones
@@ -21,6 +20,12 @@
 		d) “El resultado de A*B es: r”
 		e) “El factorial de A es: r1 y El factorial de B es: r2”
 	5. Salir
+• Todas las funciones matemáticas del menú se deberán realizar en una biblioteca aparte,
+que contenga las funciones para realizar las cinco operaciones.
+• En el menú deberán aparecer los valores actuales cargados en los operandos A y B
+(donde dice “x” e “y” en el ejemplo, se debe mostrar el número cargado)
+• Deberán contemplarse los casos de error (división por cero, etc)
+• Documentar todas las funciones
  ============================================================================
  */
 
@@ -56,12 +61,12 @@ int main(void)
 		switch (opciones)
 		{
 			case 1:
-				operadorAValido=pedirNumeroFloat(&x, INTENTOS, "Ingresar 1er operando (A)", "Ingrese un NUMERO");
-				//printf("\nOperando A vale: %.4f\n",x);
+				operadorAValido=pedirNumeroFloat(&x,"Ingresar 1er operando (A)","Ingrese un NUMERO Float", INTENTOS);
+				printf("\nOperando A vale: %.4f\n",x);
 				break;
 			case 2:
-				operadorBValido=pedirNumeroFloat(&y, INTENTOS, "Ingresar 1er operando (B)", "Ingrese un NUMERO");
-				//printf("\nOperando B vale: %.4f\n",y);
+				operadorBValido=pedirNumeroFloat(&y, "Ingresar 1er operando (A)","Ingrese un NUMERO Float", INTENTOS);
+				printf("\nOperando B vale: %.4f\n",y);
 				break;
 			case 3:
 				if(operadorAValido==0 && operadorBValido==0)
@@ -106,5 +111,6 @@ int main(void)
 				break;
 		}
 	}while(opciones!=5);
+	printf("\nUSTED HA SALIDO DE LA CALCULADORA\n");
 	return EXIT_SUCCESS;
 }
