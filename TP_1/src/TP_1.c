@@ -1,9 +1,8 @@
 /*
  ============================================================================
- Name        : tp_1.c
+ Name        : TP_1.c
  Author      : TEJEDA Roberto Daniel
- Description :
- Enunciado
+ Description : Enunciado
 	Hacer una calculadora.Para ello el programa iniciará y contará con un menú de opciones:
 	1. Ingresar 1er operando (A=x)
 	2. Ingresar 2do operando (B=y)
@@ -38,79 +37,105 @@ que contenga las funciones para realizar las cinco operaciones.
 
 int main(void)
 {
-	float x;
-	float y;
-	int a;
-	int b;
-	int operadorAValido;
-	int operadorBValido;
+	float x=0;
+	float y=0;
+	int valIntx;
+	int valInty;
+	int operadorAValido=-1;
+	int operadorBValido=-1;
 	int opciones;
 	float resultSuma;
 	float resultResta;
 	float resultMultiplica;
 	float resultDivision;
-	int estadoDivision;
-	int estadoFactA;
-	int estadoFactB;
+	int estadoDivision=-1;
+	int calcular;
+	int estadoFactA=-1;
+	int estadoFactB=-1;
 	int resultFactA;
 	int resultFactB;
-	printf("\nBienvenide a la calculador\n");
+	printf("\nBienvenide a la calculador\n"); //SALUDO DE BIENVENIDA
 	do
 	{
-		opciones=imprimirMenu();
+		opciones=imprimirMenu(x, y); //IMPRIMO EL MENÚ
 		switch (opciones)
 		{
-			case 1:
-				operadorAValido=pedirNumeroFloat(&x,"Ingresar 1er operando (A)","Ingrese un NUMERO Float", INTENTOS);
-				printf("\nOperando A vale: %.4f\n",x);
+			case 1: //PIDO Y VALIDO OPERADOR A
+				operadorAValido=pedirFloat(&x, "Ingresar 1er operando (A)", "Ingrese un NUMERO Float", INTENTOS);
+				calcular=-1; //SOLICITO CALCULAR
 				break;
-			case 2:
-				operadorBValido=pedirNumeroFloat(&y, "Ingresar 1er operando (A)","Ingrese un NUMERO Float", INTENTOS);
-				printf("\nOperando B vale: %.4f\n",y);
+			case 2: //PIDO Y VALIDO OPERDADOR B
+				operadorBValido=pedirFloat(&y, "Ingresar 2do operando (B)", "Ingrese un NUMERO Float", INTENTOS);
+				calcular=-1; //SOLICITO CALCULAR
 				break;
-			case 3:
-				if(operadorAValido==0 && operadorBValido==0)
+			case 3: //CALCULO
+				if(operadorAValido==0 && operadorBValido==0) //VERIFICO OPERADORES VALIDOS
 				{
-				sumaFloat(&resultSuma, x, y);
-				restaFloat(&resultResta, x, y);
-				multiplicacionFloat(&resultMultiplica, x, y);
-				estadoDivision=dividirFloat(&resultDivision, x, y);
-				a=x; //printf("a vale  \n%d",a);
-				b=y; //printf("b vale  \n%d",b);
-				estadoFactA=factorial(&resultFactA, a);
-				estadoFactB=factorial(&resultFactB, b);
+					sumaFloat(&resultSuma, x, y); //CALCULO
+					restaFloat(&resultResta, x, y);
+					multiplicacionFloat(&resultMultiplica, x, y);
+					estadoDivision=dividirFloat(&resultDivision, x, y);
+					if ((int)x-x==0) //VERIFICO QUE EL OPERADOR A SEA UN ENTERO
+					{
+						valIntx=(int)x;
+						estadoFactA=factorial(&resultFactA, valIntx);
+					}
+					if((int)y-y==0) //VERIFICO QUE EL OPERADOR B SEA UN ENTERO
+					{
+						valInty=(int)y;
+						estadoFactB=factorial(&resultFactB, valInty);
+					}
+				calcular=0; //CONFIRMO QUE SE HA CALCULADO
+				printf("\nLAS OPERACIONES SE HAN REALIZADO\n");
+				}else
+				{
+					printf("\n\nINGRESE OPERADORES A Y B VALIDOS\n\n");
 				}
 				break;
-			case 4:
-				printf("\nEl resultado de A+B es: %.4f\n",resultSuma);
-				printf("\nEl resultado de A-B es: %.4f\n",resultResta);
-				printf("\nEl resultado de A*B es: %.4f\n",resultMultiplica);
-				if(estadoDivision==0)
+			case 4: //INFORMO RESULTADOS
+				if(operadorAValido==0 && operadorBValido==0) //VERIFICO INGRESO DE OPERDORES VALIDOS
 				{
-					printf("\nEl resultado de A/B es: %.4f\n",resultDivision);
-				}else
+					if(calcular==0)	//VERIFICO QUE SE HAYA CALCULADO O REINGRESADO UN OPERADOR
 					{
-						printf("\nNo es posible dividir por cero\n");
-					}
-				if (estadoFactA==0)
-				{
-					printf("\nEl factorial de A es: %d\n", resultFactA);
-				}else
-					{
-						printf("\nNo es posible calcular factorial de enteros menores a cero\n");
-					}
-				if (estadoFactB==0)
-					{
-							printf("\nEl factorial de b es: %d\n", resultFactB);
+						printf("\na) El resultado de %.2f + %.2f es: %.4f\n",x,y,resultSuma); //INFORMO SEGUN CORRESPONDA
+						printf("\nb) El resultado de %.2f - %.2f es: %.4f\n",x,y,resultResta);
+						if(estadoDivision==0)
+							{
+							printf("\nc) El resultado de %.2f / %.2f es: %.4f\n",x,y,resultDivision);
+							}else
+								{
+								printf("\nc) No es posible dividir por cero\n");
+								}
+						printf("\nd) El resultado de %.2f * %.2f es: %.4f\n",x,y,resultMultiplica);
+						if (estadoFactA==0)
+							{
+							printf("\ne) El factorial de %.2f es: %d\n",x, resultFactA);
+							}else
+								{
+								printf("\nNo es posible calcular factorial de \nnumeros decimales o menores a cero\n");
+								}
+						if (estadoFactB==0)
+							{
+							printf("\ne) El factorial de %.2f es: %d\n",y, resultFactB);
+							}else
+								{
+								printf("\nNo es posible calcular factorial de \nnumeros decimales o menores a cero\n");
+								}
 					}else
-						{
-							printf("\nNo es posible calcular factorial de enteros menores a cero\n");
-						}
+					{
+						printf("\nPARA VER LOS RESULTADOS REALIZAR LAS OPERACIONES\n");
+					}
+
+				}else
+				{
+					printf("\n\nINGRESE OPERADORES A Y B VALIDOS\n\n");
+				}
+
 				break;
 			default:
 				break;
 		}
-	}while(opciones!=5);
-	printf("\nUSTED HA SALIDO DE LA CALCULADORA\n");
+	}while(opciones!=5); //VUELVO AL MENÚ PRINCIPAL
+	printf("\nUSTED HA SALIDO DE LA CALCULADORA\n");//SALUDO DE DESPEDIDA
 	return EXIT_SUCCESS;
 }
