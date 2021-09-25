@@ -54,7 +54,7 @@ int main(void)
 	int estadoFactB=-1;
 	int resultFactA;
 	int resultFactB;
-	printf("\nBienvenide a la calculador\n"); //SALUDO DE BIENVENIDA
+	puts("\nBienvenide a la calculador\n"); //SALUDO DE BIENVENIDA
 	do
 	{
 		opciones=imprimirMenu(x, y); //IMPRIMO EL MENÚ
@@ -86,10 +86,10 @@ int main(void)
 						estadoFactB=factorial(&resultFactB, valInty);
 					}
 				calcular=0; //CONFIRMO QUE SE HA CALCULADO
-				printf("\nLAS OPERACIONES SE HAN REALIZADO\n");
+				puts("\nLAS OPERACIONES SE HAN REALIZADO\n");
 				}else
 				{
-					printf("\n\nINGRESE OPERADORES A Y B VALIDOS\n\n");
+					puts("\n\nINGRESE OPERADORES A Y B VALIDOS\n\n");
 				}
 				break;
 			case 4: //INFORMO RESULTADOS
@@ -104,31 +104,38 @@ int main(void)
 							printf("\nc) El resultado de %.2f / %.2f es: %.4f\n",x,y,resultDivision);
 							}else
 								{
-								printf("\nc) No es posible dividir por cero\n");
+								puts("\nc) No es posible dividir por cero\n");
 								}
 						printf("\nd) El resultado de %.2f * %.2f es: %.4f\n",x,y,resultMultiplica);
-						if (estadoFactA==0)
+						if(estadoFactA==0)
+						{
+							if(estadoFactB==0)
 							{
-							printf("\ne) El factorial de %.2f es: %d\n",x, resultFactA);
+							printf("\ne) El factorial de %.2f es: %d y el factorial de %.2f es: %d\n",x, resultFactA,y,resultFactB);
 							}else
 								{
-								printf("\nNo es posible calcular factorial de \nnumeros decimales o menores a cero\n");
+								printf("\ne) El factorial de %.2f es: %d\n",x, resultFactA);
+								printf("\nNo es posible calcular factorial de %.2f\n",y);
 								}
-						if (estadoFactB==0)
+						}else
 							{
-							printf("\ne) El factorial de %.2f es: %d\n",y, resultFactB);
-							}else
+								if(estadoFactB==0)
 								{
-								printf("\nNo es posible calcular factorial de \nnumeros decimales o menores a cero\n");
-								}
+									printf("\ne) El factorial de %.2f es: %d\n",y, resultFactB);
+									printf("\nNo es posible calcular factorial de %.2f\n",x);
+								}else
+									{
+									printf("\ne) No es posible calcular factorial de %.2f y %.2f\n",x,y);
+									}
+							}
 					}else
 					{
-						printf("\nPARA VER LOS RESULTADOS REALIZAR LAS OPERACIONES\n");
+						puts("\nPARA VER LOS RESULTADOS REALIZAR LAS OPERACIONES\n");
 					}
 
 				}else
 				{
-					printf("\n\nINGRESE OPERADORES A Y B VALIDOS\n\n");
+					puts("\n\nINGRESE OPERADORES A Y B VALIDOS\n\n");
 				}
 
 				break;
@@ -136,6 +143,6 @@ int main(void)
 				break;
 		}
 	}while(opciones!=5); //VUELVO AL MENÚ PRINCIPAL
-	printf("\nUSTED HA SALIDO DE LA CALCULADORA\n");//SALUDO DE DESPEDIDA
+	puts("\nUSTED HA SALIDO DE LA CALCULADORA\n");//SALUDO DE DESPEDIDA
 	return EXIT_SUCCESS;
 }
