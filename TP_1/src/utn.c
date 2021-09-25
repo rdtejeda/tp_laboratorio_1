@@ -90,16 +90,30 @@ static int esNumericaFloat(char* cadena)
 {
 	int i=0;
 	int retorno = -1;
+	int contNeg=0;
+	int contPuntos=0;
 	if(cadena != NULL && strlen(cadena) > 0)
 	{
 		retorno=0;
 		while(cadena[i] != '\0')
 			{
-				if(cadena[i] < 48 || cadena[i] > 57)
+				if(cadena[i] < '0' || cadena[i] > '9')
 					{
-					if(cadena[i]==46 || cadena[i]==45)
+					if(cadena[i]=='-' || cadena[i]=='.')
 						{
-
+							if(cadena[i]=='-')
+							{
+								contNeg++;
+								if(i!=0)
+								{
+									retorno = -1;
+									break;
+								}
+							}
+							if(cadena[i]=='.')
+							{
+								contPuntos++;
+							}
 						}else
 						{
 							retorno = -1;
@@ -108,6 +122,10 @@ static int esNumericaFloat(char* cadena)
 					}
 				i++;
 			}
+		if(contNeg>1 ||contPuntos>1)
+		{
+			retorno=-1;
+		}
 	}
 	return retorno;
 }
