@@ -1,0 +1,25 @@
+#bibliotecas
+						ArrayEmployees
+						Pedir
+						
+estructura: 			eEmployee
+						int id; PEDIR iD
+ 						char name[51]; CARGAR USUARIO
+ 						char lastName[51]; CARGAR USUARIO Apellido
+						float salary; CARGAR USUARIO
+						int sector; CARGAR USUARIO
+						int isEmpty; INICILIZAR OCUPADO 0 LIBRE -1
+
+array de estructura: 	employees[NOMINA_EMP]
+
+
+#defines
+						NOMINA_EMP 1000
+						OCUPADO 0 //isBusy flag OCUPADA O LLENA
+						LIBRE -1  //isEmpty flag VACIA o LIBRE
+						MINIMO 0  //Menu
+						MAXIMO 5
+						INTENTOS 3
+						SALMIN 100000
+						SALMAX 500000
+						
