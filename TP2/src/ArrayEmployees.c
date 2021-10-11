@@ -13,10 +13,10 @@
 #include "ArrayEmployees.h"
 #include "Pedir.h"
 
-#define NOMINA_EMP 10
-#define OCUPADO 0 //isEmpty flag OCUPADA O LLENA
-#define LIBRE -1  //isEmpty flag
-#define MINIMO 0
+#define NOMINA_EMP 1000
+#define OCUPADO 0
+#define LIBRE -1
+#define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
 #define SALMIN 100000
@@ -24,13 +24,12 @@
 
 //=============================================================================
 // 2.1 Función initEmployees
-/** \brief inicializa todas las posiciones del array como Libres
- * esta fiuncion pone la bander isEmpty en -1 para todos las posiciones del array
- * \param list *pEmployee del array Employee
- * \param len int largo del Array
- * \return Retorna 0 si todo bien  y -1 si no
+/**
+ * \brief inicializa todas las posiciones del array como Libres pone la bander isEmpty en -1
+ * \param  *plistEmployee, len
+ * \return Retorna 0 si todo bien y -1 si no logro inicializar el array
  */
-int initEmployees(eEmployee plistEmployee[],int len)
+int initEmployees(eEmployee *plistEmployee,int len)
 {
 	int estado=-1;
 	   if (plistEmployee!=NULL && len>0)
@@ -45,25 +44,16 @@ int initEmployees(eEmployee plistEmployee[],int len)
 }
 //=============================================================================
 //2.2 Función addEmployees
-//Agrega en un array de empleados existente los valores recibidos como parámetro en la primer
-//posición libre.
-/** \brief add in a existing list of employees the values received as parameters
- * in the first empty position
- * \param list employee*
- * \param len int
- * \param id int
- * \param name[] char
- * \param lastName[] char
- * \param salary float
- * \param sector int
- * \return int Return (-1) if Error [Invalid length or NULL pointer or without
-free space] - (0) if Ok
+/**
+ * brief Agrega en el array de empleados existente los valores recibidos como parámetro en la primer posición libre.
+ * \param *plistEmployee, len, id, name[], lastName[], salary, sector
+ * \return retona -1 si no pudo ser cargado el array o 0 si salio todo bien
  */
-int addEmployee(eEmployee plistEmployee[],int len,int id,char name[],char lastName[],float salary,int sector)
+int addEmployee(eEmployee *plistEmployee,int len,int id,char name[],char lastName[],float salary,int sector)
 {
 	int estado=-1;
 	int posicionLibre;
-	if(plistEmployee!=NULL && len>0 && id>0 && salary>SALMIN && salary<SALMAX && strlen(name)>0 && strlen(lastName)>0 && sector>=1 && sector<=5)
+	if(plistEmployee!=NULL && len>0 && id>0 && salary>=SALMIN && salary<=SALMAX && strlen(name)>0 && strlen(lastName)>0 && sector>=1 && sector<=5)
 		{
 			posicionLibre=buscarLugarLibre(plistEmployee, NOMINA_EMP);
 			if(posicionLibre>=0)
@@ -82,21 +72,14 @@ int addEmployee(eEmployee plistEmployee[],int len,int id,char name[],char lastNa
 		}
    return estado;
 }
-//Ejemplo uso: r = addEmployee(arrayEmployees, ELEMENTS,id,name,lastName,salary,sector);
 //==============================================================================
-/*
- 2.3 Función findEmployeeById
-Busca un empleado recibiendo como parámetro de búsqueda su Id.
+// 2.3 Función findEmployeeById
+/**
+* \brief Busca un empleado recibiendo como parámetro de búsqueda su Id.
+* \param  *plistEmployee,len, id
+* \return Retorna la posicion en el array del id solicitado o -1 si el no exixte
 */
-
-/** \brief find an Employee by Id en returns the index position in array.
-* \param list Employee*
-* \param len int
-* \param id int
-* \return Return employee index position or (-1) if [Invalid length or NULL
-pointer received or employee not found]
-*/
-int findEmployeeById(eEmployee plistEmployee[],int len,int id)
+int findEmployeeById(eEmployee *plistEmployee,int len,int id)
 {
 	int retorno=-1;
 		if(plistEmployee!=NULL && len>0)
@@ -112,48 +95,41 @@ int findEmployeeById(eEmployee plistEmployee[],int len,int id)
 		}
 		return retorno;
 }
-// Ejemplo uso: int index = findEmployeeById(arrayEmployees, ELEMENTS,9);
 //=============================================================================
-//2.4 Función removeEmployee Elimina de manera lógica (isEmpty Flag en 1) un empleado recibiendo como parámetro su Id.
-/** \brief Remove a Employee by Id (put isEmpty Flag in 1)
-*
-* \param list Employee*
-* \param len int
-* \param id int
-* \return int Return (-1) if Error [Invalid length or NULL pointer or if can't
-find a employee] - (0) if Ok
+//2.4 Función removeEmployee
+/**
+*  \brief Elimina de manera lógica con isEmpty Flag en -1 un empleado recibiendo como parámetro su Id.
+* \param *plistEmployee,len, id
+* \return retorna -1 si no pudo ser dado de baja y 0 si esta todo bien
 */
-int removeEmployee(eEmployee plistEmployee[],int len,int id)
+int removeEmployee(eEmployee *plistEmployee,int len,int id)
 {
 	int retorno=-1;
 	int posicion;
-	posicion=findEmployeeById(plistEmployee, len, id);
-	if(plistEmployee!=NULL && len>0)
+	if(plistEmployee!=NULL && len>0 && id>=MINIMO && id<=NOMINA_EMP)
 		 {
-			if(posicion==0)
+			posicion=findEmployeeById(plistEmployee, len, id);
+			if(posicion>=0)
 			{
-			plistEmployee[posicion].isEmpty=LIBRE; // podemos hacer un estados de baja para llevar un control
+			plistEmployee[posicion].isEmpty=LIBRE;
 			retorno=0;
+			printf("\nSe ha dado de baja al empleado %s\n\n",strcat(plistEmployee[posicion].name, plistEmployee[posicion].lastName));
 			}else
 			{
 			puts("Ingrese ID Valido");
 			}
-
+			;
 		 }
 	return retorno;
 }
-//Ejemplo uso: r = removeEmployee(arrayEmployees, ELEMENTS,20);
 //=============================================================================
-//2.5 Función sortEmployees Ordena el array de empleados por apellido y sector de manera ascendente o descendente.
-/** \brief Sort the elements in the array of employees, the argument order
-indicate UP or DOWN order
-*
-* \param list Employee*
-* \param len int
-* \param order int [1] indicate UP - [0] indicate DOWN
-* \return int Return (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
+//2.5 Función sortEmployees
+/**
+* \brief Ordena el array de empleados por apellido y sector de manera ascendente o descendente.
+* \param *plistEmployee,len, order
+* \return retorna -1 si no pudo ser ordenada la lista y 0 si esta todo ordenado
 */
-int sortEmployees(eEmployee plistEmployee[],int len,int order)
+int sortEmployees(eEmployee *plistEmployee,int len,int order)
 {
 	int banderaSwapp=-1;
 	eEmployee auxiliar;
@@ -214,21 +190,21 @@ int sortEmployees(eEmployee plistEmployee[],int len,int order)
 				}
 			}while(banderaSwapp==1);
 		}
-		return banderaSwapp;
+	return banderaSwapp;
 }
 //=============================================================================
 //2.6 Función printEmployees
 /**
-* \brief Imprime todo el arraay de Employee
-* \param recibe un estructura por puntero y el largo
+* \brief Imprime el arraay de empleados ocupados
+* \param *plistEmployee, len
 * \return Retorna 0 si se logor carga  y -1  si no
 */
-int printEmployees(eEmployee plistEmployee[],int len)
+int printEmployees(eEmployee *plistEmployee,int len)
 {
-	int estado=-1;
+		int estado=-1;
 		int contadordeCargados=0;
 		printf("==============================================================================\n");
-		printf("Id Name\t\t\tLastName\t\tSalary\t   Sector\tIsEmty\n");
+		printf("Id Nombre\t\tApellido\t\tSalario\t     Sector\tIsEmty\n");
 		printf("==============================================================================\n");
 		if (plistEmployee!=NULL && len>0)
 		{
@@ -248,16 +224,15 @@ int printEmployees(eEmployee plistEmployee[],int len)
 		}
 		printf("==============================================================================\n");
 		estado=0;
-		return estado;
+	return estado;
 }
 //==============================================================================
-
 /**
-* \brief Modifica un ID emty
-* \param recibe un estructura por puntero, el largo
-* \return Retorna -1 todo mal 0 todo bien
+* \brief Modifica un ID ocupado dando la opcion a elegir los campos
+* \param *plistEmployee, len
+* \return Retorna -1 si no pudo hacer los cambios y 0 todo bien
 */
- int modifyOneEmploye(eEmployee plistEmployee[], int len)
+ int modifyOneEmploye(eEmployee *plistEmployee, int len)
  {
 	 int retorno=-1;
 	 int idamodificar;
@@ -267,36 +242,51 @@ int printEmployees(eEmployee plistEmployee[],int len)
 	 char bufferName[51];
 	 float bufferSalary;
 	 int opcion;
-	 eEmployee auxiliar; //= {1,100,99,"Name","Siempre 11 viva",0}; //MODIFICACION Harcodeada
+	 eEmployee auxiliar;
 	 if(plistEmployee!=NULL && len>0)
 		 {
-		 printEmployees(plistEmployee, NOMINA_EMP); // IMPRIMIR LISTA EMTY - MOSTRA LISTADO de posibles Display a modificar
-		 pedirInt(&idamodificar, "Ingrese Id a modificar", "Error Ingrese Id valido", 1, NOMINA_EMP, INTENTOS);// Seleccionar id a modificar
-		 posicion=findEmployeeById(plistEmployee, NOMINA_EMP, idamodificar); // Buscar la posicion en el array del id selecionado
-		 if (posicion>=0)// Modificar la pantalla
+		 printEmployees(plistEmployee, NOMINA_EMP);
+		 pedirInt(&idamodificar, "Ingrese Id a modificar", "Error Ingrese Id valido", MINIMO, NOMINA_EMP, INTENTOS);
+		 if(idamodificar>0 && idamodificar<NOMINA_EMP)
+		 {
+			 posicion=findEmployeeById(plistEmployee, NOMINA_EMP, idamodificar);
+		 }
+		 if (posicion>=0)
 			 {
 			 do
 				 {
 					 puts("INGRESE OPCION A MOFIFICAR");
 					 imprimirMenuModificar();
-					 pedirInt(&opcion, "INGRESE OPCION A MOFIFICAR", "Ingrese entre 1 y 5", 1,5,INTENTOS);
+					 pedirInt(&opcion, "INGRESE OPCION A MOFIFICAR", "Ingrese entre 1 y 5", MINIMO,MAXIMO,INTENTOS);
 					 switch (opcion)
 					 {
 						case 1:
-							pedirText(bufferName, sizeof(auxiliar.name), "Ingrese Nombre", "Ingrese Nombre valido",INTENTOS);
-							strncpy(plistEmployee->name, bufferName, sizeof(plistEmployee->name));
+							if(pedirText(bufferName, sizeof(auxiliar.name), "Ingrese Nombre", "Ingrese Nombre valido",INTENTOS)==0)
+							{
+								strncpy(plistEmployee[posicion].name, bufferName, sizeof(plistEmployee->name));
+							}else
+								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						case 2:
-							pedirText(bufferLastName, sizeof(auxiliar.lastName), "Ingrese Apellido", "Ingrese Apellido valido", INTENTOS);
-							strncpy(plistEmployee->lastName, bufferLastName, sizeof(plistEmployee->lastName));
+							if(pedirText(bufferLastName, sizeof(auxiliar.lastName), "Ingrese Apellido", "Ingrese Apellido valido", INTENTOS)==0)
+							{
+								strncpy(plistEmployee[posicion].lastName, bufferLastName, sizeof(plistEmployee->lastName));
+							}else
+								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						case 3:
-							pedirFloat(&bufferSalary, "Ingrese salario", "Ingrese monto valido", SALMIN, SALMAX, INTENTOS);
-							plistEmployee->salary=bufferSalary;
+							if(pedirFloat(&bufferSalary, "Ingrese salario", "Ingrese monto valido", SALMIN, SALMAX, INTENTOS)==0)
+							{
+								plistEmployee[posicion].salary=bufferSalary;
+							}else
+								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						case 4:
-							pedirInt(&buffersSector, "Ingrese sector", "Opciones entre 1 y 5", MINIMO, MAXIMO, INTENTOS);
-							plistEmployee->sector=buffersSector;
+							if(pedirInt(&buffersSector, "Ingrese sector", "Opciones entre 1 y 5", MINIMO, MAXIMO, INTENTOS)==0)
+							{
+								plistEmployee[posicion].sector=buffersSector;
+							}else
+								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						default:
 							break;
@@ -309,8 +299,12 @@ int printEmployees(eEmployee plistEmployee[],int len)
 	 return retorno;
  }
  //=============================================================================
-
- int operateSalaryEmployees(eEmployee plistEmployee[],int len,float *totalSalary, float *promSalary, int *overProm)
+ /**
+ * \brief Realiza las operaciones necesarias sobre la variable salario para reportar total, promedio y cantidad sobre el promedio
+ * \param *plistEmployee, len,t*totalSalary, *promSalary, *overProm
+ * \return Retorna -1 si no pudo hacer los calculos y 0 todo bien
+ */
+ int operateSalaryEmployees(eEmployee *plistEmployee,int len,float *totalSalary, float *promSalary, int *overProm)
  {
 	 int retorno=-1;
 	 float sumSalary=0;
@@ -338,30 +332,17 @@ int printEmployees(eEmployee plistEmployee[],int len)
 		 }
 		 *totalSalary=sumSalary;
 		 *overProm=contOverProm;
-		 //totalSalary=sumSalary;
-		// printf("\nSuma de salarios %.2f, cantidad de salarios %d y promedio de salarios %.2f\n", sumSalary, contSalary, promSalary);
-	 }
+		 retorno=0;
+	}
 	 return retorno;
  }
 //=============================================================================
 /**
-  * \brief me da un id consecutivo y no repetido memorizando el ultimolvalor
-  * \param void
-  * \return Retorna 0 si todo bien  y -1 si no numero de id
-  */
-int dameUnIdNuevo()
-{
-	static int contador=0;
-	contador++;
-	return contador;
-}
-//==============================================================================
-/**
 * \brief busca el primer index del array con flag emty
-* \param recibe un estructura por puntero y el largo
+* \param *plistEmployee, len
 * \return Retorna lugar el primer lugar libre de la lista o -1 si no encuentra ninguno libre
 */
-int buscarLugarLibre(eEmployee plistEmployee[],int len)
+int buscarLugarLibre(eEmployee *plistEmployee,int len)
 {
 	int retorno=-1;
 	if(plistEmployee!=NULL && len>0)
@@ -378,3 +359,29 @@ int buscarLugarLibre(eEmployee plistEmployee[],int len)
 	return retorno;
 }
 //===========================================================================
+/**
+ * \brief busca cantidad de posiciones ocupadas en el array
+* \param *plistEmployee, len
+* \return Retorna cantidad de lugares o -1 si no encuentra ninguno lugar ocupados
+ */
+int listlong(eEmployee *plistEmployee,int len)
+{
+	int retorno=-1;
+	int contBusy=0;
+	if(plistEmployee!=NULL && len>0)
+	{
+		for (int i=0;i<len;++i)
+		{
+			if(plistEmployee[i].isEmpty==OCUPADO)
+			{
+				contBusy++;
+			}
+		}
+		if(contBusy>0)
+		{
+			retorno=contBusy;
+		}
+	}
+	return retorno;
+}
+//===================================================================================
