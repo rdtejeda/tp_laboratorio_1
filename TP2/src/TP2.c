@@ -4,7 +4,7 @@
  Author      : Tejeda Roberto
  Version     :
  Copyright   : Your copyright notice
- Description : Employee
+ Description : Employees
  ============================================================================
  */
 
@@ -31,7 +31,6 @@ int main(void)
 	int retornoInit;
 	int menuInicial;
 	int menuInformes;
-	int idBaja;
 	int order;
 	float sumSalary;
 	float promSalary;
@@ -49,7 +48,7 @@ int main(void)
 			switch (menuInicial)
 			{
 				case 1:
-					if(loadNewEmployee(employees, NOMINA_EMP)==0)
+					if(loadAddEmployee(employees, NOMINA_EMP)==0)
 					{
 						printEmployees(employees, NOMINA_EMP);
 					}else
@@ -58,17 +57,14 @@ int main(void)
 				case 2:
 					if(flagListaInit>0)
 					{
-					modifyOneEmploye(employees, NOMINA_EMP);
+						modifyOneEmploye(employees, NOMINA_EMP);
 					}else
 						puts(" ¡CUIDADO! No hay cargado ningun empleado");
 					break;
 				case 3:
 					if(flagListaInit>0)
 					{
-					printEmployees(employees, NOMINA_EMP);
-					pedirInt(&idBaja, "Ingrese el Id a dar de baja", "Ingrese ID valido", MINIMO, NOMINA_EMP, INTENTOS);
-					removeEmployee(employees, NOMINA_EMP,idBaja);
-					printEmployees(employees, NOMINA_EMP);
+						loadRemoveEmployee(employees, NOMINA_EMP);
 					}else
 						puts(" ¡CUIDADO! No hay ha cargado ningun empleado");
 					break;
@@ -86,7 +82,7 @@ int main(void)
 								if(sortEmployees(employees, NOMINA_EMP,order)==0)
 								{
 									printEmployees(employees, NOMINA_EMP);
-								}
+								}else
 								puts("La lista no ha podido ser ordenada, intentelo nuevamente");
 								break;
 							case 2:
@@ -102,21 +98,17 @@ int main(void)
 							}
 						}while(menuInformes<3);
 					}else
-						{
-							puts(" ¡CUIDADO! No hay cargado ningun empleado");
-						}
+						puts(" ¡CUIDADO! No hay cargado ningun empleado");
 					break;
 				case 5:
-					pedirInt(&menuInicial, "CONFIRME QUE DESEA ABANDONAR LA NOMINA INGRESANDO 5 sino 1", "Opciones entre 1 y 5",MINIMO, MAXIMO, INTENTOS);
+					pedirInt(&menuInicial, "CONFIRME QUE DESEA ABANDONAR LA NOMINA INGRESANDO 5 sino ingrese 1", "Opciones entre 1 y 5",MINIMO, MAXIMO, INTENTOS);
 					break;
 				default:
 					break;
 			}
 		}while(menuInicial<5);
 	}else
-		{
-			puts("La nomina de Empleados no se ha podido inicializar");
-		}
+		puts("La nomina de Empleados no se ha podido inicializar");
 	puts("La ejecución de la nomina a finalizado");
 	return EXIT_SUCCESS;
 }

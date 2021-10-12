@@ -24,13 +24,14 @@
 
 static int dameUnIdNuevo();
 
+
 //============================================================
 /**
-* \brief Pide al ususario todos los datos de el nuevo empleado a ser cargado yllama a la funcio para dar de alta
-* \param plistEmployee[], len
+* \brief Pide al ususario todos los datos de el nuevo empleado a ser cargado y llama a la funcio para dar de alta
+* \param *plistEmployee recibo array por referencia, len tamaño del array
 * \return retona -1 si no pudo ser cargado el array o 0 si salio todo bien.
 */
-int loadNewEmployee(eEmployee *plistEmployee, int len)
+int loadAddEmployee(eEmployee *plistEmployee, int len)
 {
 	int retorno=-1;
 	int id;
@@ -39,7 +40,7 @@ int loadNewEmployee(eEmployee *plistEmployee, int len)
 	float salary;
 	int sector;
 	int retornoAddEmplyee;
-	if(buscarLugarLibre(plistEmployee, NOMINA_EMP)>=0 && len>0)
+	if(findFreePlace(plistEmployee, NOMINA_EMP)>=0 && len>0)
 		{
 		puts("Estamos por dar de alta un nuevo empleado, por favor ingrese los datos solicitados");
 			do
@@ -68,8 +69,24 @@ int loadNewEmployee(eEmployee *plistEmployee, int len)
 			}
 	retorno=0;
 	return retorno;
+}
+//============================================================================================================
+/**
+* \brief Pide al ususario todos los datos de el empleado a remover y llama a la funcio para eliminarlo
+* \param *plistEmployee recibo array por referencia, len tamaño del array
+* \return retona -1 si no pudo ser cargado el array o 0 si salio todo bien.
+*/
 
-	//plistEmployee!=NULL && len>0 && id>0 && salary>SALMIN && salary<SALMAX && strlen(name)>0 && strlen(lastName)>0 && sector>=1 && sector<=5
+int loadRemoveEmployee(eEmployee *plistEmployee, int len)
+{
+	int retorno=-1;
+	int idBaja;
+	printEmployees(plistEmployee, NOMINA_EMP);
+	pedirInt(&idBaja, "Ingrese el Id a dar de baja", "Ingrese ID valido", MINIMO, NOMINA_EMP, INTENTOS);
+	removeEmployee(plistEmployee, NOMINA_EMP,idBaja);
+	printEmployees(plistEmployee, NOMINA_EMP);
+
+	return retorno;
 }
 //==========================================================
 /**
@@ -88,7 +105,7 @@ void imprimirMenuInicial()
 }
 //===========================================================
 /**
-* \brief Imprime el menu de los informe
+* \brief Imprime el menu de informes
 * \param
 * \return
 */
@@ -100,7 +117,7 @@ void imprimirMenuInformes()
 }
 //===========================================================
 /**
-* \brief Imprime el menu de las opciones para modoficar datos del usuario
+* \brief Imprime el menu de opciones para modoficar datos del usuario
 * \param
 * \return
 */
@@ -115,7 +132,7 @@ void imprimirMenuModificar()
 //===========================================================
 /**
 * \brief pide un texto al ususario
-* \param *pResultado, len, *mensaje, *mensajeError, intentos
+* \param *pResultado, len tamaño del array, *mensaje, *mensajeError, intentos
 * \return Retorna -1  salio mal, 0 salio bien
 */
 int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int intentos)
@@ -200,7 +217,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  //=====================================================================================================
  /**
   * \brief Verifica si la cadena ingresada es numerica
-  * \param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
+  * \param *cadena Puntero al espacio de memoria donde se dejara el resultado de la funcion
   * \return Retorna 0 si se obtiene un numero  y -1 si no
  */
  int esNumericaInt(char *cadena)
@@ -225,7 +242,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  //=====================================================================================================
  /**
   * \brief Lee de stdin hasta que encuentra un '\n' o hasta que haya copiado en cadena un máximo de 'longitud - 1' caracteres.
-  * \param pResultado[], len
+  * \param *pResultado paso por referncia el array, len tamaño del array
   * \return Retorna 0 si se obtiene una cadena y -1  si no
  */
  int myGets(char *pResultado, int len)
@@ -298,7 +315,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  //=========================================================================================================
  /**
  * \brief Verifica si la cadena ingresada es numerica
- * \param cadena Cadena de caracteres a ser analizada
+ * \param *cadena paso por referencia Cadena de caracteres a ser analizada
  * \return Retorna 0  si la cadena es numerica y -1  si no lo es
  */
  int esNumericaFloat(char *cadena)
@@ -347,7 +364,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
 //===================================================================================================
 /**
 * \brief Verifica si la cadena ingresada es alfanumerica
-* \param cadena Cadena de caracteres a ser analizada
+* \param *cadena Paso por referencia Cadena de caracteres a ser analizada
 * \return Retorna 0 si la cadena es alfa numerica y -1 si no lo es
 */
 int esAlfaumerica(char *cadena)
@@ -380,9 +397,9 @@ int esAlfaumerica(char *cadena)
 }
 //===================================================================================
 /**
-  * \brief me da un id consecutivo y no repetido memorizando el ultimolvalor
+  * \brief me devuelve un id consecutivo y no repetido, mientras se ejecute el programa, memorizando el ultimo valor
   * \param void
-  * \return Retorna 0 si todo bien  y -1 si no numero de id
+  * \return Retorna numero de id
   */
 static int dameUnIdNuevo()
 {

@@ -23,9 +23,10 @@ int addEmployee(eEmployee *plistEmployee,int len,int id,char name[],char lastNam
 int findEmployeeById(eEmployee *plistEmployee,int len,int id);
 int removeEmployee(eEmployee *plistEmployee,int len,int id);
 int sortEmployees(eEmployee *plistEmployee,int len,int order);
+
 int modifyOneEmploye(eEmployee *plistEmployee, int len);
 int operateSalaryEmployees(eEmployee *plistEmployee,int len,float *totalSalary, float *promSalary, int *overProm);
 int listlong(eEmployee *plistEmployee,int len);
-int buscarLugarLibre(eEmployee *plistEmployee,int len);
+int findFreePlace(eEmployee *plistEmployee,int len);
 
 #endif /* ARRAYEMPLOYEES_H_ */

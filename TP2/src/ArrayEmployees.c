@@ -26,7 +26,7 @@
 // 2.1 Función initEmployees
 /**
  * \brief inicializa todas las posiciones del array como Libres pone la bander isEmpty en -1
- * \param  *plistEmployee, len
+ * \param  *plistEmployee recibo array por referencia, len tamaño del array
  * \return Retorna 0 si todo bien y -1 si no logro inicializar el array
  */
 int initEmployees(eEmployee *plistEmployee,int len)
@@ -46,7 +46,7 @@ int initEmployees(eEmployee *plistEmployee,int len)
 //2.2 Función addEmployees
 /**
  * brief Agrega en el array de empleados existente los valores recibidos como parámetro en la primer posición libre.
- * \param *plistEmployee, len, id, name[], lastName[], salary, sector
+ * \param *plistEmployee recibo array por referencia, len tamaño del array, id, name[], lastName[], salary, sector
  * \return retona -1 si no pudo ser cargado el array o 0 si salio todo bien
  */
 int addEmployee(eEmployee *plistEmployee,int len,int id,char name[],char lastName[],float salary,int sector)
@@ -55,7 +55,7 @@ int addEmployee(eEmployee *plistEmployee,int len,int id,char name[],char lastNam
 	int posicionLibre;
 	if(plistEmployee!=NULL && len>0 && id>0 && salary>=SALMIN && salary<=SALMAX && strlen(name)>0 && strlen(lastName)>0 && sector>=1 && sector<=5)
 		{
-			posicionLibre=buscarLugarLibre(plistEmployee, NOMINA_EMP);
+			posicionLibre=findFreePlace(plistEmployee, NOMINA_EMP);
 			if(posicionLibre>=0)
 				{
 				plistEmployee[posicionLibre].id=id;
@@ -76,7 +76,7 @@ int addEmployee(eEmployee *plistEmployee,int len,int id,char name[],char lastNam
 // 2.3 Función findEmployeeById
 /**
 * \brief Busca un empleado recibiendo como parámetro de búsqueda su Id.
-* \param  *plistEmployee,len, id
+* \param  *plistEmployee recibo array por referencia,len tamaño del array, id
 * \return Retorna la posicion en el array del id solicitado o -1 si el no exixte
 */
 int findEmployeeById(eEmployee *plistEmployee,int len,int id)
@@ -99,7 +99,7 @@ int findEmployeeById(eEmployee *plistEmployee,int len,int id)
 //2.4 Función removeEmployee
 /**
 *  \brief Elimina de manera lógica con isEmpty Flag en -1 un empleado recibiendo como parámetro su Id.
-* \param *plistEmployee,len, id
+* \param *plistEmployee recibo array por referencia,len tamaño del array, id
 * \return retorna -1 si no pudo ser dado de baja y 0 si esta todo bien
 */
 int removeEmployee(eEmployee *plistEmployee,int len,int id)
@@ -126,7 +126,7 @@ int removeEmployee(eEmployee *plistEmployee,int len,int id)
 //2.5 Función sortEmployees
 /**
 * \brief Ordena el array de empleados por apellido y sector de manera ascendente o descendente.
-* \param *plistEmployee,len, order
+* \param *plistEmployee recibo array por referencia,len tamaño del array, order orden ascenedete o descenedente
 * \return retorna -1 si no pudo ser ordenada la lista y 0 si esta todo ordenado
 */
 int sortEmployees(eEmployee *plistEmployee,int len,int order)
@@ -196,7 +196,7 @@ int sortEmployees(eEmployee *plistEmployee,int len,int order)
 //2.6 Función printEmployees
 /**
 * \brief Imprime el arraay de empleados ocupados
-* \param *plistEmployee, len
+* \param *plistEmployee recibo array por referencia, len tamaño del array
 * \return Retorna 0 si se logor carga  y -1  si no
 */
 int printEmployees(eEmployee *plistEmployee,int len)
@@ -229,7 +229,7 @@ int printEmployees(eEmployee *plistEmployee,int len)
 //==============================================================================
 /**
 * \brief Modifica un ID ocupado dando la opcion a elegir los campos
-* \param *plistEmployee, len
+* \param *plistEmployee recibo array por referencia, len tamaño del array
 * \return Retorna -1 si no pudo hacer los cambios y 0 todo bien
 */
  int modifyOneEmploye(eEmployee *plistEmployee, int len)
@@ -301,7 +301,9 @@ int printEmployees(eEmployee *plistEmployee,int len)
  //=============================================================================
  /**
  * \brief Realiza las operaciones necesarias sobre la variable salario para reportar total, promedio y cantidad sobre el promedio
- * \param *plistEmployee, len,t*totalSalary, *promSalary, *overProm
+ * \param *plistEmployee recibo array por referencia, len tamaño del array,
+ * \param *totalSalary paso por referencia total de salrio, *promSalary paso por referncia promedio de salario,
+ * \param *overProm paso por referencia la cantidad de empleados que cobran sobre el promedio
  * \return Retorna -1 si no pudo hacer los calculos y 0 todo bien
  */
  int operateSalaryEmployees(eEmployee *plistEmployee,int len,float *totalSalary, float *promSalary, int *overProm)
@@ -339,10 +341,10 @@ int printEmployees(eEmployee *plistEmployee,int len)
 //=============================================================================
 /**
 * \brief busca el primer index del array con flag emty
-* \param *plistEmployee, len
+* \param *plistEmployee recibo array por referencia, len tamaño del array
 * \return Retorna lugar el primer lugar libre de la lista o -1 si no encuentra ninguno libre
 */
-int buscarLugarLibre(eEmployee *plistEmployee,int len)
+int findFreePlace(eEmployee *plistEmployee,int len)
 {
 	int retorno=-1;
 	if(plistEmployee!=NULL && len>0)
@@ -361,7 +363,7 @@ int buscarLugarLibre(eEmployee *plistEmployee,int len)
 //===========================================================================
 /**
  * \brief busca cantidad de posiciones ocupadas en el array
-* \param *plistEmployee, len
+* \param *plistEmployee recibo array por referencia, len tamaño del array
 * \return Retorna cantidad de lugares o -1 si no encuentra ninguno lugar ocupados
  */
 int listlong(eEmployee *plistEmployee,int len)
