@@ -13,8 +13,11 @@
 #include <stdio_ext.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "ArrayEmployees.h"
 #include "Pedir.h"
+#include "Menu.h"
+#include "Informes.h"
 
 #define NOMINA_EMP 1000
 #define OCUPADO 0
@@ -22,7 +25,7 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 100000
+#define SALMIN 50000
 #define SALMAX 500000
 
 int main(void)
@@ -31,12 +34,7 @@ int main(void)
 	int retornoInit;
 	int menuInicial;
 	int menuInformes;
-	int order;
-	float sumSalary;
-	float promSalary;
-	int overProm;
 	int flagListaInit;
-
 	retornoInit=initEmployees(employees, NOMINA_EMP);
 	if (retornoInit==0)
 	{
@@ -78,27 +76,17 @@ int main(void)
 						switch (menuInformes)
 							{
 							case 1:
-								pedirInt(&order, "Ingrese el Orden del listado (1-ASCENDENTE Ó 2-DESCENEDENTE)","Ingrese 1 ó 2", MINIMO, 2, INTENTOS);
-								if(sortEmployees(employees, NOMINA_EMP,order)==0)
-								{
-									printEmployees(employees, NOMINA_EMP);
-								}else
-								puts("La lista no ha podido ser ordenada, intentelo nuevamente");
+								pedirLista(employees, NOMINA_EMP);
 								break;
 							case 2:
-								if(operateSalaryEmployees(employees, NOMINA_EMP, &sumSalary, &promSalary, &overProm)==0)
-								{
-									printf("\n\nLa Suma de los salarios es %.2f\n\nEl Promedio de salarios %.2f\n\n"
-											"La cantidad de salarios que superan el promedio es %d\n\n",sumSalary,promSalary,overProm);
-								}else
-								puts("No se han podido calcular los datos");
+								operarSalarios_2(employees, NOMINA_EMP);
 								break;
 							default:
 								break;
 							}
 						}while(menuInformes<3);
 					}else
-						puts(" ¡CUIDADO! No hay cargado ningun empleado");
+						puts("¡CUIDADO! No hay cargado ningún empleado");
 					break;
 				case 5:
 					pedirInt(&menuInicial, "CONFIRME QUE DESEA ABANDONAR LA NOMINA INGRESANDO 5 sino ingrese 1", "Opciones entre 1 y 5",MINIMO, MAXIMO, INTENTOS);

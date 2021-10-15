@@ -12,6 +12,8 @@
 
 #include "ArrayEmployees.h"
 #include "Pedir.h"
+#include "Menu.h"
+#include "Informes.h"
 
 #define NOMINA_EMP 1000
 #define OCUPADO 0
@@ -19,11 +21,9 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 100000
+#define SALMIN 50000
 #define SALMAX 500000
 
-//=============================================================================
-// 2.1 Función initEmployees
 /**
  * \brief inicializa todas las posiciones del array como Libres pone la bander isEmpty en -1
  * \param  *plistEmployee recibo array por referencia, len tamaño del array
@@ -42,8 +42,6 @@ int initEmployees(eEmployee *plistEmployee,int len)
 	   }
 	   return estado;
 }
-//=============================================================================
-//2.2 Función addEmployees
 /**
  * brief Agrega en el array de empleados existente los valores recibidos como parámetro en la primer posición libre.
  * \param *plistEmployee recibo array por referencia, len tamaño del array, id, name[], lastName[], salary, sector
@@ -72,8 +70,6 @@ int addEmployee(eEmployee *plistEmployee,int len,int id,char name[],char lastNam
 		}
    return estado;
 }
-//==============================================================================
-// 2.3 Función findEmployeeById
 /**
 * \brief Busca un empleado recibiendo como parámetro de búsqueda su Id.
 * \param  *plistEmployee recibo array por referencia,len tamaño del array, id
@@ -95,8 +91,6 @@ int findEmployeeById(eEmployee *plistEmployee,int len,int id)
 		}
 		return retorno;
 }
-//=============================================================================
-//2.4 Función removeEmployee
 /**
 *  \brief Elimina de manera lógica con isEmpty Flag en -1 un empleado recibiendo como parámetro su Id.
 * \param *plistEmployee recibo array por referencia,len tamaño del array, id
@@ -122,8 +116,6 @@ int removeEmployee(eEmployee *plistEmployee,int len,int id)
 		 }
 	return retorno;
 }
-//=============================================================================
-//2.5 Función sortEmployees
 /**
 * \brief Ordena el array de empleados por apellido y sector de manera ascendente o descendente.
 * \param *plistEmployee recibo array por referencia,len tamaño del array, order orden ascenedete o descenedente
@@ -192,8 +184,6 @@ int sortEmployees(eEmployee *plistEmployee,int len,int order)
 		}
 	return banderaSwapp;
 }
-//=============================================================================
-//2.6 Función printEmployees
 /**
 * \brief Imprime el arraay de empleados ocupados
 * \param *plistEmployee recibo array por referencia, len tamaño del array
@@ -226,7 +216,6 @@ int printEmployees(eEmployee *plistEmployee,int len)
 		estado=0;
 	return estado;
 }
-//==============================================================================
 /**
 * \brief Modifica un ID ocupado dando la opcion a elegir los campos
 * \param *plistEmployee recibo array por referencia, len tamaño del array
@@ -298,7 +287,6 @@ int printEmployees(eEmployee *plistEmployee,int len)
 		 }
 	 return retorno;
  }
- //=============================================================================
  /**
  * \brief Realiza las operaciones necesarias sobre la variable salario para reportar total, promedio y cantidad sobre el promedio
  * \param *plistEmployee recibo array por referencia, len tamaño del array,
@@ -338,7 +326,6 @@ int printEmployees(eEmployee *plistEmployee,int len)
 	}
 	 return retorno;
  }
-//=============================================================================
 /**
 * \brief busca el primer index del array con flag emty
 * \param *plistEmployee recibo array por referencia, len tamaño del array
@@ -360,7 +347,6 @@ int findFreePlace(eEmployee *plistEmployee,int len)
 	}
 	return retorno;
 }
-//===========================================================================
 /**
  * \brief busca cantidad de posiciones ocupadas en el array
 * \param *plistEmployee recibo array por referencia, len tamaño del array
@@ -386,4 +372,3 @@ int listlong(eEmployee *plistEmployee,int len)
 	}
 	return retorno;
 }
-//===================================================================================

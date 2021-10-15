@@ -12,6 +12,8 @@
 
 #include "ArrayEmployees.h"
 #include "Pedir.h"
+#include "Menu.h"
+#include "Informes.h"
 
 #define NOMINA_EMP 1000
 #define OCUPADO 0
@@ -19,13 +21,11 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 100000
+#define SALMIN 50000
 #define SALMAX 500000
 
 static int dameUnIdNuevo();
 
-
-//============================================================
 /**
 * \brief Pide al ususario todos los datos de el nuevo empleado a ser cargado y llama a la funcio para dar de alta
 * \param *plistEmployee recibo array por referencia, len tamaño del array
@@ -70,13 +70,11 @@ int loadAddEmployee(eEmployee *plistEmployee, int len)
 	retorno=0;
 	return retorno;
 }
-//============================================================================================================
 /**
 * \brief Pide al ususario todos los datos de el empleado a remover y llama a la funcio para eliminarlo
 * \param *plistEmployee recibo array por referencia, len tamaño del array
 * \return retona -1 si no pudo ser cargado el array o 0 si salio todo bien.
 */
-
 int loadRemoveEmployee(eEmployee *plistEmployee, int len)
 {
 	int retorno=-1;
@@ -88,48 +86,6 @@ int loadRemoveEmployee(eEmployee *plistEmployee, int len)
 
 	return retorno;
 }
-//==========================================================
-/**
-* \brief Imprime el menu de INICIAL de opciones
-* \param
-* \return
-*/
-void imprimirMenuInicial()
-{
-	puts("MENU PRINCIPAL");
-	puts("1- ALTAS");
-	puts("2- MODIFICAR");
-	puts("3- BAJA");
-	puts("4- INFORMAR");
-	puts("5- SALIR DE NOMINA");
-}
-//===========================================================
-/**
-* \brief Imprime el menu de informes
-* \param
-* \return
-*/
-void imprimirMenuInformes()
-{
-	puts("1- Listado de los empleados ordenados alfabéticamente por Apellido y Sector");
-	puts("2- Total y promedio de los salarios, y cuántos empleados superan el salario promedio");
-	puts("3- SALIR DE INFORMES");
-}
-//===========================================================
-/**
-* \brief Imprime el menu de opciones para modoficar datos del usuario
-* \param
-* \return
-*/
-void imprimirMenuModificar()
-{
-	puts("1- Modificar Nombre");
-	puts("2- Modificar Apellido");
-	puts("3- Modificar Salario");
-	puts("4- Modificar Sector");
-	puts("5- SALIR DE CAMBIOS");
-}
-//===========================================================
 /**
 * \brief pide un texto al ususario
 * \param *pResultado, len tamaño del array, *mensaje, *mensajeError, intentos
@@ -163,8 +119,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
 	}
 	return retorno;
 }
- //==================================================================================================
- /**
+/**
   * \brief Solicita un numero al usuario, leuego de verificarlo devuelve el resultado
   * \param *pResultado, *mensaje, *mensajeError, minimo, maximo, intentos
   * \return Retorna 0 si se obtuvo el numero y -1 si no
@@ -214,8 +169,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  	}
  	return retorno;
  }
- //=====================================================================================================
- /**
+/**
   * \brief Verifica si la cadena ingresada es numerica
   * \param *cadena Puntero al espacio de memoria donde se dejara el resultado de la funcion
   * \return Retorna 0 si se obtiene un numero  y -1 si no
@@ -239,7 +193,6 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  	}
  	return retorno;
  }
- //=====================================================================================================
  /**
   * \brief Lee de stdin hasta que encuentra un '\n' o hasta que haya copiado en cadena un máximo de 'longitud - 1' caracteres.
   * \param *pResultado paso por referncia el array, len tamaño del array
@@ -261,8 +214,7 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  	}
  	return retorno;
  }
- //==================================================================================================
- /**
+  /**
   * \brief Solicita un numero al usuario, leuego de verificarlo devuelve el resultado
   * \param *pResultado, *mensaje, *mensajeError, minimo, maximo, intentos
   * \return Retorna 0 si se obtuvo el numero y -1 si no
@@ -312,7 +264,6 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  	}
  	return retorno;
  }
- //=========================================================================================================
  /**
  * \brief Verifica si la cadena ingresada es numerica
  * \param *cadena paso por referencia Cadena de caracteres a ser analizada
@@ -361,7 +312,6 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
  	}
  	return retorno;
  }
-//===================================================================================================
 /**
 * \brief Verifica si la cadena ingresada es alfanumerica
 * \param *cadena Paso por referencia Cadena de caracteres a ser analizada
@@ -395,7 +345,6 @@ int esAlfaumerica(char *cadena)
 	}
 	return retorno;
 }
-//===================================================================================
 /**
   * \brief me devuelve un id consecutivo y no repetido, mientras se ejecute el programa, memorizando el ultimo valor
   * \param void
@@ -407,4 +356,3 @@ static int dameUnIdNuevo()
 	contador++;
 	return contador;
 }
-//==============================================================================
