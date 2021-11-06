@@ -42,7 +42,7 @@ main-build: TP3
 TP3: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "TP3" $(OBJS) $(USER_OBJS) $(LIBS) /media/usuario/5A7CEC697CEC40FD/Users/Usuario/Downloads/UTNFrA/Repositorios_Clonados_Compratido/tp_laboratorio_1/TP3/TP3/TP3/eclipse_tp3_v3/eclipse_tp3_v3/tp3_linux/LinkedList.a
+	gcc  -o "TP3" $(OBJS) $(USER_OBJS) $(LIBS) /media/usuario/5A7CEC697CEC40FD/Users/Usuario/Downloads/UTNFrA/Repositorios_Clonados_Compratido/tp_laboratorio_1/TP3/LinkedList.a
 	@echo 'Finished building target: $@'
 	@echo ' '
 

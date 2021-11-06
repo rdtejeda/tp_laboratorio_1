@@ -26,7 +26,7 @@ C_DEPS += \
 %.o: ../%.c subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C Compiler'
-	gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<" /media/usuario/5A7CEC697CEC40FD/Users/Usuario/Downloads/UTNFrA/Repositorios_Clonados_Compratido/tp_laboratorio_1/TP3/TP3/TP3/eclipse_tp3_v3/eclipse_tp3_v3/tp3_linux/LinkedList.a
+	gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<" /media/usuario/5A7CEC697CEC40FD/Users/Usuario/Downloads/UTNFrA/Repositorios_Clonados_Compratido/tp_laboratorio_1/TP3/LinkedList.a
 	@echo 'Finished building: $<'
 	@echo ' '
 
