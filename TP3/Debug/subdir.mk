@@ -6,18 +6,24 @@
 C_SRCS += \
 ../Controller.c \
 ../Employee.c \
+../Menu.c \
+../ValidarPedir.c \
 ../main.c \
 ../parser.c 
 
 OBJS += \
 ./Controller.o \
 ./Employee.o \
+./Menu.o \
+./ValidarPedir.o \
 ./main.o \
 ./parser.o 
 
 C_DEPS += \
 ./Controller.d \
 ./Employee.d \
+./Menu.d \
+./ValidarPedir.d \
 ./main.d \
 ./parser.d 
 
