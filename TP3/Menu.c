@@ -25,16 +25,16 @@ int menuPrincipal()
 {
 	int opcion=-1;
 	puts("****************************************************************************");
-	puts("Menu:");
+	puts("Menu Principal:");
 	puts("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).");
-	puts("2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).");
+	puts("2. Cargar los datos de los empleados desde el archivo data.bin (modo binario).");
 	puts("3. Alta de empleado.");
 	puts("4. Modificar datos de empleado.");
 	puts("5. Baja de empleado.");
 	puts("6. Listar empleados.");
 	puts("7. Ordenar empleados.");
 	puts("8. Guardar los datos de los empleados en el archivo data.csv (modo texto).");
-	puts("9. Guardar los datos de los empleados en el archivo data.csv (modo binario).");
+	puts("9. Guardar los datos de los empleados en el archivo data.bin (modo binario).");
 	puts("10. Salir");
 	puts("******************************************************************************");
 	pedirInt(&opcion,"Ingese la opción deseada","ERROR-Ingrese un numero entre 1y10",MINIMO,MAXIMO,INTENTOS);
@@ -49,7 +49,7 @@ int menuSeleccion()
 {
 	int opcion=-1;
 puts("****************************************************************************");
-puts("Para Buscar Empleado Selecione por:");
+puts("Buscar Empleado Por:");
 puts("1. Id");
 puts("2. Nombre");
 puts("3. Salir");
@@ -62,11 +62,11 @@ return opcion;
   * \param void
   * \return Retorna opcion deseada si todo bien  y -1 si no lo logra
   */
-int menuEdicion()
+int menuOpcion()
 {
 	int opcion=-1;
 puts("****************************************************************************");
-puts("Elija parametro a modificar:");
+puts("Elija Opcion:");
 puts("1. Nombre");
 puts("2. Horas Trabajadas");
 puts("3. Sueldo");
@@ -75,5 +75,27 @@ puts("**************************************************************************
 pedirInt(&opcion,"Seleccione dato a modificar","Error-Imgrese entre 1 y 4",MINIMO,MAXIMO4,INTENTOS);
 return opcion;
 }
-
-
+/**
+  * \brief imprime el menu de criterio de ordenamiento
+  * \param void
+  * \return Retorna opcion deseada si todo bien  y -1 si no lo logra
+  */
+int menuCriterio()
+{
+	int opcion=-1;
+puts("****************************************************************************");
+puts("Elija Opcion:");
+puts("1. Nombre");
+puts("2. Horas Trabajadas");
+puts("3. Sueldo");
+puts("4. ID");
+puts("******************************************************************************");
+pedirInt(&opcion,"Seleccione dato a modificar","Error-Imgrese entre 1 y 4",MINIMO,MAXIMO4,INTENTOS);
+return opcion;
+}
+void imprimirEncabezado()
+{
+	puts("----------------------------------------------------------------------------");
+	printf("ID\tNombre de el Empleado\tHoras  Sueldo\n");
+	puts("----------------------------------------------------------------------------");
+}

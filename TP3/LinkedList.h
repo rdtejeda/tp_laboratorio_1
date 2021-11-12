@@ -31,8 +31,6 @@ struct LinkedList
 }typedef LinkedList;
 #endif
 
-
-
 //Publicas
 LinkedList* ll_newLinkedList(void); //Crea nueva LnkedList
 int ll_len(LinkedList* this); //DEVULVE EL LARGO DE UNA LINKEDLIST RECIBIDA POR PUNTERO
@@ -43,12 +41,12 @@ void* ll_get(LinkedList* this, int index);//en una lista busca un index y devuel
 int ll_set(LinkedList* this, int index,void* pElement);
 int ll_remove(LinkedList* this,int index);
 int ll_clear(LinkedList* this);
-int ll_deleteLinkedList(LinkedList* this);
+int ll_deleteLinkedList(LinkedList* this);//para salit
 int ll_indexOf(LinkedList* this, void* pElement);//le pasas el puntero a empleado te da el indice
 int ll_isEmpty(LinkedList* this);
-int ll_push(LinkedList* this, int index, void* pElement);
-void* ll_pop(LinkedList* this,int index);
-int ll_contains(LinkedList* this, void* pElement);
+int ll_push(LinkedList* this, int index, void* pElement);//agregar en sierto lugar
+void* ll_pop(LinkedList* this,int index);//get y remove
+int ll_contains(LinkedList* this, void* pElement);//
 int ll_containsAll(LinkedList* this,LinkedList* this2);
 LinkedList* ll_subList(LinkedList* this,int from,int to);
 LinkedList* ll_clone(LinkedList* this);

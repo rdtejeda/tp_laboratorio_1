@@ -38,17 +38,17 @@ return pEmployee;
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr)
 {
 	Employee* pEmployee=employee_new();
-
 	if(pEmployee!=NULL && idStr!=NULL&& nombreStr!=NULL && horasTrabajadasStr!=NULL)
 	{
-		if(employee_setIdChar(pEmployee,idStr)!=0||employee_setSueldoChar(pEmployee,sueldoStr)!=0||
-		employee_setHorasTrabajadasChar(pEmployee,horasTrabajadasStr)!=0||employee_setNombre(pEmployee,nombreStr)!=0)
+		if(employee_setIdChar(pEmployee,idStr)!=0 ||employee_setSueldoChar(pEmployee,sueldoStr)!=0 ||
+		employee_setHorasTrabajadasChar(pEmployee,horasTrabajadasStr)!=0 || employee_setNombre(pEmployee,nombreStr)!=0)
 		{
-			puts("No se han podio setear los parametros ");
 			employee_delete(pEmployee);
+			pEmployee=NULL;
+			puts("Algun dato no ha sido valido - Intentelo nuevamente");
 		}
 	}else
-			puts("No se ha podido crear nuevo entidad");
+			puts("No se ha podido crear nuevo empleado");
 return pEmployee;
 }
 //===================================================================================================
@@ -65,21 +65,21 @@ void employee_delete(Employee* pEmployee)
 //==================================================================================================
 /**
 * \brief Busca posicion en LnkedList de un Epliyee por su Id
-* \param es recibe *listEmployees e id buscado
+* \param es recibe *pLinkedListEmpleados e id buscado
 * \return Retorna posicion si lo encontro y -1 si no existe Employee
 */
-int employee_findById(LinkedList* listEmployees, int id)
+int employee_findById(LinkedList* pLinkedListEmpleados, int id)
 {
 	int retorno=-1;
 	int posicion;
 	int largoLista;
 	Employee* pAuxiliarEmployee;
-	if(listEmployees!=NULL && id>0)
+	if(pLinkedListEmpleados!=NULL && id>0)
 		{
-		largoLista=ll_len(listEmployees);
+		largoLista=ll_len(pLinkedListEmpleados);
 		for (int i = 0; i < largoLista; i++)
 			{
-				pAuxiliarEmployee=ll_get(listEmployees, i);
+				pAuxiliarEmployee=ll_get(pLinkedListEmpleados, i);
 				if(pAuxiliarEmployee->id==id)
 				{
 					posicion=i;
@@ -93,10 +93,10 @@ return retorno;
 //==================================================================================================
 /**
 * \brief Busca posicion en LnkedList de un Epliyee por su Id
-* \param es recibe *listEmployees e id buscado
+* \param es recibe *pLinkedListEmpleados e id buscado
 * \return Retorna posicion si lo encontro y -1 si no existe Employee
 */
-int employee_modify(LinkedList* listEmployees)
+int employee_modify(LinkedList* pLinkedListEmpleados)
 {
 	int retorno=-1;
 	int posicion;
@@ -104,36 +104,36 @@ int employee_modify(LinkedList* listEmployees)
 	char bufferNombre[128];
 	int bufferHorasTrabajadas;
 	int bufferSueldo;
-		if(listEmployees!=NULL)
+		if(pLinkedListEmpleados!=NULL)
 			{
-			posicion=employee_findPositionBy(listEmployees);
+			posicion=employee_findPositionBy(pLinkedListEmpleados);
 			printf("%d\n",posicion);
 			if(posicion>=0)
 				{
 				puts("El empleado selecionado es");
-				controller_ListOneEmployee(listEmployees, posicion);
+				controller_ListOneEmployee(pLinkedListEmpleados, posicion);
 				do
 					{
-					opcion=menuEdicion();
+					opcion=menuOpcion();
 					switch(opcion)
 						{
 						case 1:
 							pedirNombre(bufferNombre, sizeof(bufferNombre),"Ingres nuevo nombre","Nombre invalido", INTENTOS);
-							employee_setNombre(ll_get(listEmployees, posicion),bufferNombre);
+							employee_setNombre(ll_get(pLinkedListEmpleados, posicion),bufferNombre);
 							puts("Su modificacion es");
-							controller_ListOneEmployee(listEmployees, posicion);
+							controller_ListOneEmployee(pLinkedListEmpleados, posicion);
 							break;
 						case 2:
 							pedirInt(&bufferHorasTrabajadas,"Ingres Horas Trabajadas","Error ingrese entre 1 y 200",MINIMO,MAXIMOHORAS,INTENTOS);
-							employee_setHorasTrabajadas(ll_get(listEmployees, posicion),bufferHorasTrabajadas);
+							employee_setHorasTrabajadas(ll_get(pLinkedListEmpleados, posicion),bufferHorasTrabajadas);
 							puts("Su modificacion es");
-							controller_ListOneEmployee(listEmployees, posicion);
+							controller_ListOneEmployee(pLinkedListEmpleados, posicion);
 							break;
 						case 3:
 							pedirInt(&bufferSueldo,"Ingres Sueldo","Error ingrese monto valido",MINIMO,MAXIMOSUELDO,INTENTOS);
-							employee_setSueldo(ll_get(listEmployees, posicion),bufferSueldo);
+							employee_setSueldo(ll_get(pLinkedListEmpleados, posicion),bufferSueldo);
 							puts("Su modificacion es");
-							controller_ListOneEmployee(listEmployees, posicion);
+							controller_ListOneEmployee(pLinkedListEmpleados, posicion);
 							break;
 						}
 					}while(opcion!=4);
@@ -145,21 +145,21 @@ return retorno;
 //==================================================================================================
 /**
 * \brief Busca posicion en LnkedList de un Epliyee por su Nombre de empleado
-* \param es recibe *listEmployees e array de char name
+* \param es recibe *pLinkedListEmpleados e array de char name
 * \return Retorna posicion si lo encontro y -1 si no existe Employee
 */
-int employee_findByName(LinkedList* listEmployees, char name[])
+int employee_findByName(LinkedList* pLinkedListEmpleados, char name[])
 {
 	int retorno=-1;
 	int posicion;
 	int largoLista;
 	Employee* pAuxiliarEmployee;
-	if(listEmployees!=NULL && name!=NULL)
+	if(pLinkedListEmpleados!=NULL && name!=NULL)
 		{
-		largoLista=ll_len(listEmployees);
+		largoLista=ll_len(pLinkedListEmpleados);
 		for (int i = 0; i < largoLista; i++)
 			{
-				pAuxiliarEmployee=ll_get(listEmployees, i);
+				pAuxiliarEmployee=ll_get(pLinkedListEmpleados, i);
 				if(!strcmp(pAuxiliarEmployee->nombre,name))
 				{
 					posicion=i;
@@ -182,7 +182,7 @@ int employee_setId(Employee* this,int id)
  int retorno=-1;
  if(this!=NULL&&id>=0)
 	 {
-		 this->id=id;
+	 	 this->id=id;
 		 retorno=0;
 	 }
  return retorno;
@@ -246,10 +246,10 @@ return retorno;
 int employee_setNombre(Employee* this,char* nombre)
 {
 int retorno=-1;
-if(this!=NULL && nombre!=NULL &&esAlfabetica(nombre)==0)
+if(this!=NULL && nombre!=NULL && esNombre(nombre)==0)
 	{
-		strncpy(this->nombre,nombre,sizeof(this->nombre));
-		retorno=0;
+	strncpy(this->nombre,nombre,sizeof(this->nombre));
+	retorno=0;
 	}
 return retorno;
 }
@@ -261,9 +261,11 @@ return retorno;
 */
 int employee_getNombre(Employee* this,char* nombre)
 {
+
 int retorno=-1;
-if(this!=NULL&&nombre!=NULL)
+if(this!=NULL && nombre!=NULL )
 {
+
 	strcpy(nombre,this->nombre);
 	retorno=0;
 }
@@ -457,52 +459,154 @@ int dameUnIdNuevoEmployee(void)
 /*
  * brief permite selecionar un emplye por id o nombre
  * brief imprime el menu y pide opcio
- * param *pArrayListEmployee a LinkedList
+ * param *pLinkedListEmpleados a LinkedList
  * return posicion dle empleado en la linked lis si lo logro y -1 si salio mal
  */
-int employee_findPositionBy(LinkedList* pArrayListEmployee)
+int employee_findPositionBy(LinkedList* pLinkedListEmpleados)
 {
   int retorno=-1;
   int opcion;
   int id;
   char nombre[128];
   int posicion;
-  if(pArrayListEmployee!=NULL)
+  if(pLinkedListEmpleados!=NULL)
   		{
-  		opcion=menuSeleccion();
-  		switch(opcion)
-  			{
-
-  				case 1://Id
-  				   pedirInt(&id,"Ingres Id de empleado","Ingres Id valido",MINIMO,10000000,INTENTOS);
-  				   posicion=employee_findById(pArrayListEmployee,id);
-  				   break;
-  			   case 2://Nombre
-  				   pedirNombre(nombre,sizeof(nombre),"Ingres Nombre de emmpleado","Nombre invalido",INTENTOS);
-  				   posicion=employee_findByName(pArrayListEmployee, nombre);
-  				break;
-  			 }
-  		retorno=posicion;
-  		  		}
+	  	  controller_ListEmployee(pLinkedListEmpleados);
+	  	  opcion=menuSeleccion();
+	  	  switch(opcion)
+				{
+					case 1://Id
+					   pedirInt(&id,"Ingres Id de empleado","Ingres Id valido",MINIMO,10000000,INTENTOS);
+					   posicion=employee_findById(pLinkedListEmpleados,id);
+					   break;
+					case 2://Nombre
+					   pedirNombre(nombre,sizeof(nombre),"Ingres Nombre de emmpleado","Nombre invalido",INTENTOS);
+					   posicion=employee_findByName(pLinkedListEmpleados, nombre);
+					break;
+				 }
+	  	  retorno=posicion;
+  		 }
 return retorno;
 }
-int employee_remove(LinkedList* pArrayListEmployee)
+int employee_remove(LinkedList* pLinkedListEmpleados)
 {
 	int posicion;
 	int retorno;
-	if(pArrayListEmployee!=NULL)
+	if(pLinkedListEmpleados!=NULL)
 		{
-		posicion=employee_findPositionBy(pArrayListEmployee);
+		posicion=employee_findPositionBy(pLinkedListEmpleados);
 		if(posicion>=0)
 			{
 
-			free(ll_get(pArrayListEmployee,posicion));
-			ll_remove(pArrayListEmployee,posicion);
+			free(ll_get(pLinkedListEmpleados,posicion));
+			ll_remove(pLinkedListEmpleados,posicion);
 			retorno=0;
 			printf("Ha sido dada de baja el empleado en posicin %d\n",posicion);
 			}
 		}
 return retorno;
 }
+/*
+ * brief transfiere los valores de sueldo de dos entidades employee
+ * brief recibe dos punteros *void
+ * return 1 o -1 segun el criterio establecido
+ */
+int employee_Criterio_ShortBySueldo(void* pVoidUno, void* pVoidCero)
+{
+	int retorno=0;
+	Employee* pEmployeeCero;
+	Employee* pEmployeeUno;
+
+	pEmployeeCero=(Employee*)pVoidCero;
+	pEmployeeUno=(Employee*)pVoidUno;
 
 
+	if(pEmployeeCero->sueldo<pEmployeeUno->sueldo)
+		{
+			retorno=1;
+		}
+	if(pEmployeeCero->sueldo>pEmployeeUno->sueldo)
+		{
+			retorno=-1;
+		}
+return retorno;
+}
+/*
+ * brief  transfiere los valores de horas trabajadas de dos entidades employee
+ * brief recibe dos punteros *void
+ * return 1 o -1 segun el criterio establecido
+ */
+int employee_Criterio_ShortByHoras(void* pVoidUno, void* pVoidCero)
+{
+	int retorno=0;
+	Employee* pEmployeeCero;
+	Employee* pEmployeeUno;
+
+	pEmployeeCero=(Employee*)pVoidCero;
+	pEmployeeUno=(Employee*)pVoidUno;
+
+
+	if(pEmployeeCero->horasTrabajadas<pEmployeeUno->horasTrabajadas)
+		{
+			retorno=1;
+		}
+	if(pEmployeeCero->horasTrabajadas>pEmployeeUno->horasTrabajadas)
+		{
+			retorno=-1;
+		}
+return retorno;
+}
+/*
+ * brief  transfiere los valores de idde dos entidades employee
+ * brief recibe dos punteros *void
+ * return 1 o -1 segun el criterio establecido
+ */
+int employee_Criterio_ShortByID(void* pVoidUno, void* pVoidCero)
+{
+	int retorno=0;
+	Employee* pEmployeeCero;
+	Employee* pEmployeeUno;
+
+	pEmployeeCero=(Employee*)pVoidCero;
+	pEmployeeUno=(Employee*)pVoidUno;
+
+	if(pEmployeeCero->id<pEmployeeUno->id)
+		{
+			retorno=1;
+		}
+	if(pEmployeeCero->id>pEmployeeUno->id)
+		{
+			retorno=-1;
+		}
+return retorno;
+}
+/*
+ * brief  transfiere los valores de nombre dos entidades employee
+ * brief recibe dos punteros *void
+ * return 1 o -1 segun el criterio establecido
+ */
+int employee_Criterio_ShortByName(void* pVoidUno, void* pVoidCero)
+{
+	int retorno=0;
+	char namecero[128];
+	char nameuno[128];
+
+	Employee* pEmployeeCero;
+	Employee* pEmployeeUno;
+
+	pEmployeeCero=(Employee*)pVoidCero;
+	pEmployeeUno=(Employee*)pVoidUno;
+
+	strncpy(namecero,pEmployeeCero->nombre,sizeof(namecero));
+	strncpy(nameuno,pEmployeeUno->nombre,sizeof(nameuno));
+
+	if(strcmp(namecero,nameuno)<0)
+		{
+			retorno=1;
+		}
+	if(strcmp(namecero,nameuno)>0)
+		{
+			retorno=-1;
+		}
+return retorno;
+}

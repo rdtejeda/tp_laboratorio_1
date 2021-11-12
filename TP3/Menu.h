@@ -10,6 +10,8 @@
 
 int menuPrincipal();
 int menuSeleccion();
-int menuEdicion();
+int menuOpcion();
+int menuCriterio();
+void imprimirEncabezado();
 
 #endif /* MENU_H_ */
