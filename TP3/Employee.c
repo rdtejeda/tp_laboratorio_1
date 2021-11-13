@@ -31,7 +31,6 @@ Employee* employee_new()
 
 return pEmployee;
 }
-//===============================================================================================
 /**
 * \brief Realiza un *pEmployee, carga los valores en todos los campos de una entidad Employee
 * \param es recibe puntero a char de los cuatro campos
@@ -53,7 +52,6 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 			puts("No se ha podido crear nuevo empleado");
 return pEmployee;
 }
-//===================================================================================================
 /**
 * \brief libera memoria reservada de forma dinamica que no pudo ser utilizada
 * \param *pEmployee
@@ -66,7 +64,6 @@ void employee_delete(Employee* pEmployee)
 		free(pEmployee);
 	}
 }
-//==================================================================================================
 /**
 * \brief Busca posicion en LnkedList de un Epliyee por su Id
 * \param es recibe *pLinkedListEmpleados e id buscado
@@ -94,7 +91,6 @@ int employee_findById(LinkedList* pLinkedListEmpleados, int id)
 		}
 return retorno;
 }
-//==================================================================================================
 /**
 * \brief Busca posicion en LnkedList de un Epliyee por su Id
 * \param es recibe *pLinkedListEmpleados e id buscado
@@ -146,7 +142,6 @@ int employee_modify(LinkedList* pLinkedListEmpleados)
 			}
 return retorno;
 }
-//==================================================================================================
 /**
 * \brief Busca posicion en LnkedList de un Epliyee por su Nombre de empleado
 * \param es recibe *pLinkedListEmpleados e array de char name
@@ -175,7 +170,6 @@ int employee_findByName(LinkedList* pLinkedListEmpleados, char name[])
 		}
 return retorno;
 }
-//======================================================================================================
 /**
 * \brief setea valor de Id en una entidad *Employee
 * \param *pEmployee y valor Id
@@ -191,7 +185,6 @@ int employee_setId(Employee* this,int id)
 	 }
  return retorno;
 }
-//=============================================================================================================
 /**
 * \brief setea valor de Id en una entidad *Employee
 * \param *pEmployee y *id char
@@ -207,7 +200,6 @@ int employee_setIdChar(Employee* this,char* id)
 	 }
  return retorno;
 }
-//=============================================================================================================
 /**
 * \brief entrega el valor de Id en una entidad *Employee
 * \param *pEmployee y *id int
@@ -224,7 +216,6 @@ if(this!=NULL && id!=NULL)
 
 return retorno;
 }
-//=============================================================================================================
 /**
 * \brief entrega el valor de Id en una entidad *Employee
 * \param *pEmployee
@@ -240,7 +231,6 @@ if(this!=NULL)
 	}
 return retorno;
 }
-//====================================================================================
 /**
 * \brief setea valor de nombre en una entidad *Employee
 * \param *pEmployee y *nombre char
@@ -256,7 +246,6 @@ if(this!=NULL && nombre!=NULL && esNombre(nombre)==0)
 	}
 return retorno;
 }
-//========================================================================================
 /**
 * \brief entrega el valor de nombre deuna entidad *Employee
 * \param *pEmployee y *nombre chart
@@ -273,7 +262,6 @@ if(this!=NULL && nombre!=NULL )
 }
 return retorno;
 }
-//=================================================================================
 /**
 * \brief setea valor de horas trabajadas en una entidad *Employee
 * \param *pEmployee y valor horasTrabajadas
@@ -289,7 +277,6 @@ if(this!=NULL&&horasTrabajadas>0)
 	}
 return retorno;
 }
-//===================================================================================
 /**
 * \brief setea valor de horas trabajadas en una entidad *Employee
 * \param *pEmployee y *horatrabajadas char
@@ -305,7 +292,6 @@ int employee_setHorasTrabajadasChar(Employee* this,char* horasTrabajadas)
 	 }
  return retorno;
 }
-//===================================================================================
 /**
 * \brief devuelve por puntero las horas trabajadas de una entidad *Employee
 * \param *pEmployee y *horastrabajadas
@@ -321,7 +307,6 @@ if(this!=NULL&&horasTrabajadas!=NULL)
 }
 return retorno;
 }
-//===================================================================================
 /**
 * \brief devuelve las horas trabajadas de una entidad *Employee
 * \param *pEmployee
@@ -336,7 +321,6 @@ if(this!=NULL)
 }
 return retorno;
 }
-//=================================================================================
 /**
 * \brief setea valor de sueldo en una entidad *Employee
 * \param *pEmployee y valor sueldo
@@ -353,7 +337,6 @@ if(this!=NULL&&sueldo>0)
 
 return retorno;
 }
-//===================================================================================
 /**
 * \brief setea valor de sueldo en una entidad *Employee
 * \param *pEmployee y *sueldo char
@@ -369,7 +352,6 @@ int employee_setSueldoChar(Employee* this,char* sueldo)
 	 }
  return retorno;
 }
-//===================================================================================
 /**
 * \brief devuelve por puntero el sueldo de una entidad *Employee
 * \param *pEmployee y *sueldo
@@ -385,7 +367,6 @@ if(this!=NULL&&sueldo!=NULL)
 }
 return retorno;
 }
-//===================================================================================
 /**
 * \brief devuelve el sueldo de una entidad *Employee
 * \param *pEmployee
@@ -400,7 +381,6 @@ if(this!=NULL)
 	}
 return retorno;
 }
-//=================================================================
 /**
   * \brief me da un id consecutivo y no repetido memorizando el ultimolvalor
   * \param void
