@@ -11,7 +11,7 @@
 #include "ValidarPedir.h"
 
 /*
- *brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
+ *brief Parsea los datos los datos de los empleados desde el archivo *.csv (modo texto).
  *param *PFile al archivo, *pArray a la LInkedList
  *return 0 si lo logro la carga y -1 si salio mal
  */
@@ -45,7 +45,7 @@ if(pFile!=NULL && pLinkedListEmpleados!=NULL)
 return retorno;
 }
 /*
- * brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
+ * brief Parsea los datos los datos de los empleados desde el archivo *.bin (modo binario).
  * param *pFile al Archivo , pLinkedListEmpleados LinkedList*
  * \return  0 si lo logro la carga y -1 si salio mal *
  */
@@ -66,8 +66,9 @@ if(pFile!=NULL&&pLinkedListEmpleados!=NULL)
 	}
 return retorno;
 }
+//=============================================================================================================
 /*
- *brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
+ *brief Parsea y cuenta la cantidad de empleados desde el archivo *.csv (modo texto).
  *param *PFile al archivo
  *return cantidad de empleados si lo logro la carga y -1 si salio mal
  */
@@ -98,7 +99,7 @@ return retorno;
 }
 
 /*
- * brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
+ * brief Parsea y cuenta la cantidad de empleados desde el archivo *.bin (modo texto).
  * param *pFile al Archivo
  * \return cantidad de empleados 0 si lo logro la carga y -1 si salio mal *
  */
@@ -123,9 +124,4 @@ if(pFile!=NULL)
 	}
 return retorno;
 }
-
-
-
-
-
-
+//==================================================================================================================

@@ -5,20 +5,7 @@
  Version     : V 1.1
  Description : Laboratorio I / 2ªCautrimetre 2021
  ============================================================================
- */
-/****************************************************************************
-    Menu:
-     1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).
-     2. Cargar los datos de los empleados desde el archivo data.csv (modo binario).
-     3. Alta de empleado
-     4. Modificar datos de empleado
-     5. Baja de empleado
-     6. Listar empleados
-     7. Ordenar empleados
-     8. Guardar los datos de los empleados en el archivo data.csv (modo texto).
-     9. Guardar los datos de los empleados en el archivo data.csv (modo binario).
-    10. Salir
-******************************************************************************/
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdio_ext.h>
@@ -36,7 +23,8 @@ int main()
 	int option=0;
 	int loadCsv=-1;
 	int loadBin=-1;
-	LinkedList* pLinkedListEmpleados = ll_newLinkedList();
+	LinkedList* pLinkedListEmpleados=ll_newLinkedList();
+	puts("¡BIENVENIDO A LA APLICACION 'NOMINA DE EMPLEADOS'!");
         do{
     	option=menuPrincipal();
     	switch(option)
@@ -44,14 +32,14 @@ int main()
             case 1:
             	if(loadBin==-1&&loadCsv==-1)
             		{
-						loadCsv=controller_loadFromText("Midata.csv",pLinkedListEmpleados);
+						loadCsv=controller_loadFromText("data.csv",pLinkedListEmpleados);
 					}else
 						puts("La carga desde archivo ya ha sido realizada");
                 break;
             case 2:
             	if(loadBin==-1&&loadCsv==-1)
 					{
-						loadCsv=controller_loadFromBinary("Midata.bin",pLinkedListEmpleados);
+						loadCsv=controller_loadFromBinary("data.bin",pLinkedListEmpleados);
 					}else
             			puts("La carga desde archivo ya ha sido realizada");
             	break;
@@ -73,22 +61,22 @@ int main()
             case 8:
             	if(loadBin==0||loadCsv==0)
 					{
-						controller_saveAsText("Midata.csv",pLinkedListEmpleados);//saveCsv=
+						controller_saveAsText("data.csv",pLinkedListEmpleados);//saveCsv=
 					}else
-						puts("Debe cargar la lista desde un archivo antes de grabar");
+						puts("Debe cargar la lista desde un archivo antes de poder grabar");
                 break;
             case 9:
             	if(loadBin==0||loadCsv==0)
 					{
-						controller_saveAsBinary("Midata.bin",pLinkedListEmpleados);
+						controller_saveAsBinary("data.bin",pLinkedListEmpleados);
 					}else
-						puts("Debe cargar la lista desde un archivo antes de grabar");
+						puts("Debe cargar la lista desde un archivo antes de poder grabar");
                 break;
             default:
              	 break;
         }
     }while(option != 10);
     controller_shotdown(pLinkedListEmpleados,loadBin,loadCsv);
-    puts("¡¡¡QUE HAY DE NUEVO VIEJO!!!");
+    puts("¡SALIO DE LA APLICACION 'NOMINA DE EMPLEADOS'!");
  return 0;
 }

@@ -8,8 +8,8 @@ typedef struct
     int sueldo;
 }Employee;
 
-Employee* employee_new();//RESERVA ESPACIO EN MEMORIA DINAMICA PARA UN DATO TIO EMPLOYEE "LESTO"
-Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr);//HACE PUNTERP *EMPLYE Y SET VALORES
+Employee* employee_new();
+Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr);
 
 void employee_delete(Employee* pEmployee);
 
@@ -29,16 +29,16 @@ int employee_findByName(LinkedList* listEmployees, char name[]);
 int dameUnIdNuevoEmployee(void);
 int employee_modify(LinkedList* listEmployees);
 int employee_findPositionBy(LinkedList* pArrayListEmployee);
+//YO
+int employee_setIdChar(Employee* this,char* id);
+int employee_getRetId(Employee* this);
 
-int employee_setIdChar(Employee* this,char* id);//YO
-int employee_getRetId(Employee* this);//YO
+int employee_setHorasTrabajadasChar(Employee* this,char* horasTrabajadas);
+int employee_getRetHorasTrabajadas(Employee* this);
 
-int employee_setHorasTrabajadasChar(Employee* this,char* horasTrabajadas);//YO
-int employee_getRetHorasTrabajadas(Employee* this);//YO
+int employee_setSueldoChar(Employee* this,char* sueldo);
 
-int employee_setSueldoChar(Employee* this,char* sueldo);//YO
-
-int employee_findById(LinkedList* listEmployees, int id);//YO
+int employee_findById(LinkedList* listEmployees, int id);
 int employee_remove(LinkedList* pArrayListEmployee);
 
 int employee_Criterio_ShortBySueldo(void* pVoidUno, void* pVoidCero);

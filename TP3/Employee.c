@@ -25,7 +25,9 @@ Employee* employee_new()
 {
 	Employee* pEmployee=(Employee*)malloc(sizeof(Employee));
 	if(pEmployee==NULL)
-		puts("No se ha podido reservar espacio en memoria");
+		{
+			puts("No se ha podido reservar espacio en memoria");
+		}
 
 return pEmployee;
 }
@@ -60,7 +62,9 @@ return pEmployee;
 void employee_delete(Employee* pEmployee)
 {
 	if(pEmployee!=NULL)
-	free(pEmployee);
+	{
+		free(pEmployee);
+	}
 }
 //==================================================================================================
 /**
@@ -86,8 +90,8 @@ int employee_findById(LinkedList* pLinkedListEmpleados, int id)
 					break;
 				}
 			}
+		retorno=posicion;
 		}
-	retorno=posicion;
 return retorno;
 }
 //==================================================================================================
@@ -234,7 +238,6 @@ if(this!=NULL)
 
 		retorno=this->id;
 	}
-
 return retorno;
 }
 //====================================================================================
@@ -261,7 +264,6 @@ return retorno;
 */
 int employee_getNombre(Employee* this,char* nombre)
 {
-
 int retorno=-1;
 if(this!=NULL && nombre!=NULL )
 {
@@ -269,7 +271,6 @@ if(this!=NULL && nombre!=NULL )
 	strcpy(nombre,this->nombre);
 	retorno=0;
 }
-
 return retorno;
 }
 //=================================================================================
@@ -318,7 +319,6 @@ if(this!=NULL&&horasTrabajadas!=NULL)
 	*horasTrabajadas=this->horasTrabajadas;
 	retorno=0;
 }
-
 return retorno;
 }
 //===================================================================================
@@ -334,7 +334,6 @@ if(this!=NULL)
 {
 	retorno=this->horasTrabajadas;
 }
-
 return retorno;
 }
 //=================================================================================
@@ -409,10 +408,10 @@ return retorno;
   */
 int dameUnIdNuevoEmployee(void)
 {
-	//TEMPORAL
+	//TEMPORAL se Ejcutó una sola vez al principio
 	/*
 	int* id;
-	int bufferint=1000;
+	int bufferint=999;
 	int cantidadt;
 	id=&bufferint;
 	FILE* pFileBinTemp;
@@ -454,10 +453,8 @@ int dameUnIdNuevoEmployee(void)
 			puts("No se ha podido inizilizar el archivo");
 	return estado;
 }
-//=======================================================================================
-
 /*
- * brief permite selecionar un emplye por id o nombre
+ * brief permite selecionar un employe por id o nombre
  * brief imprime el menu y pide opcio
  * param *pLinkedListEmpleados a LinkedList
  * return posicion dle empleado en la linked lis si lo logro y -1 si salio mal
@@ -475,11 +472,11 @@ int employee_findPositionBy(LinkedList* pLinkedListEmpleados)
 	  	  opcion=menuSeleccion();
 	  	  switch(opcion)
 				{
-					case 1://Id
+					case 1:
 					   pedirInt(&id,"Ingres Id de empleado","Ingres Id valido",MINIMO,10000000,INTENTOS);
 					   posicion=employee_findById(pLinkedListEmpleados,id);
 					   break;
-					case 2://Nombre
+					case 2:
 					   pedirNombre(nombre,sizeof(nombre),"Ingres Nombre de emmpleado","Nombre invalido",INTENTOS);
 					   posicion=employee_findByName(pLinkedListEmpleados, nombre);
 					break;
@@ -488,6 +485,11 @@ int employee_findPositionBy(LinkedList* pLinkedListEmpleados)
   		 }
 return retorno;
 }
+/*
+ * brief permite eliminar un employee lo elige, busca posición
+ * param *pLinkedListEmpleados a LinkedList
+ * return o si todo bien y -1 si salio mal
+ */
 int employee_remove(LinkedList* pLinkedListEmpleados)
 {
 	int posicion;

@@ -20,7 +20,7 @@
 #define CERO 0
 
 /*
- * brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
+ * brief Carga los datos de los empleados desde el archivo *.csv (modo texto).
  * param *char path de archivo y *pLinkedListEmpleados a LinkedList
  * return 0 si lo logro la carga y -1 si salio mal
  */
@@ -44,7 +44,7 @@ int controller_loadFromText(char* path , LinkedList* pLinkedListEmpleados)
 return retorno;
 }
 /*
- * brief Carga los datos de los empleados desde el archivo data.csv (modo binario).
+ * brief Carga los datos de los empleados desde el archivo *.bin (modo binario).
  * param param *char path de archivo y *pLinkedListEmpleados a LinkedList
  * return 0 si lo logro la carga y -1 si salio mal
  */
@@ -110,12 +110,8 @@ return retorno;
 }
 
 /** \brief Modificar datos de empleado
- *
- *
- * \param path char*
  * \param pLinkedListEmpleados LinkedList*
- * \return int
- *
+ * \return 0 si lo logro la carga y -1 si salio mal
  */
 int controller_editEmployee(LinkedList* pLinkedListEmpleados)
 {
@@ -123,17 +119,15 @@ int controller_editEmployee(LinkedList* pLinkedListEmpleados)
 	if(pLinkedListEmpleados!=NULL&&ll_len(pLinkedListEmpleados)>0)
 		{
 			employee_modify(pLinkedListEmpleados);
+			retorno=0;
 		}else
 			puts("No se puede Editar ya que La Lista esta vacía");
 return retorno;
 }
 
-/** \brief Baja de empleado
- *
- * \param path char*
+/** \brief Elimina datos de empleado
  * \param pLinkedListEmpleados LinkedList*
- * \return int
- *
+ * \return 0 si lo logro la carga y -1 si salio mal
  */
 int controller_removeEmployee(LinkedList* pLinkedListEmpleados)
 {
@@ -141,17 +135,15 @@ int controller_removeEmployee(LinkedList* pLinkedListEmpleados)
 	if(pLinkedListEmpleados!=NULL&&ll_len(pLinkedListEmpleados)>0)
 	{
 		employee_remove(pLinkedListEmpleados);
+		retorno=0;
 	}else
 	puts("No se puede Eliminar ya que La Lista esta vacía");
 return retorno;
 }
 
 /** \brief Listar empleados
- *
- * \param path char*
  * \param pLinkedListEmpleados LinkedList*
- * \return int
- *
+ * \return 0 si lo logro la carga y -1 si salio mal
  */
 int controller_ListEmployee(LinkedList* pLinkedListEmpleados)
 {
@@ -178,10 +170,8 @@ return retorno;
 }
 
 /** \brief Ordenar empleados
- *
- * \param path char*
  * \param pLinkedListEmpleados LinkedList*
- * \return int *
+ * \return 0 si lo logro la carga y -1 si salio mal
  */
 int controller_sortEmployee(LinkedList* pLinkedListEmpleados)
 {
@@ -212,26 +202,23 @@ int controller_sortEmployee(LinkedList* pLinkedListEmpleados)
 					default:
 						break;
 				}
-			pedirInt(&orden, "De Mayor a Menor ingrese '0'- De Menor a MAyor ingrese '1'","ERROR-Ingrese 0 o 1",CERO,MINIMO,INTENTOS);
+			pedirInt(&orden, "De MAYOR a MENOR Ingrese '0'- De MENOR a MAYOR Ingrese '1'","ERROR-Ingrese 0 ó 1",CERO,MINIMO,INTENTOS);
 			ll_sort(pLinkedListEmpleados, pEmplyeeOrder, orden);
 			puts("LA LISTA HA SIDO ORDENADA");
 			controller_ListEmployee(pLinkedListEmpleados);
+			retorno=0;
 		}else
 		     puts("Para poder ordenar la lista debe tener mas de un Empleado");
 	}
 return retorno;
 }
 /*
- * brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
+ * brief Guarda los datos de los empleados en el archivo *.csv (modo texto).
  * param param *char path de archivo y *pLinkedListEmpleados a LinkedList
  * return  0 si lo logro la carga y -1 si salio mal
  */
 int controller_saveAsText(char* path , LinkedList* pLinkedListEmpleados)
 {
-	/*
-	 * int a=controller_countEmployeeFromText("Midata.csv");
-	 * printf("EL CSV TIENE %d empleados\n",a);
-	 */
 	int estado=-1;
 	char bufferName[128];
 	int paso=0;
@@ -258,17 +245,12 @@ int controller_saveAsText(char* path , LinkedList* pLinkedListEmpleados)
 return estado;
 }
 /*
- * brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
+ * brief Guarda los datos de los empleados en el archivo *.bin (modo binario).
  * param param *char path de archivo y *pLinkedListEmpleados a LinkedList
  * return  0 si lo logro la carga y -1 si salio mal
  */
 int controller_saveAsBinary(char* path , LinkedList* pLinkedListEmpleados)
 {
-	/*
-	 * int b=controller_countEmployeeFromBinary("Midata.bin");
-	 * printf("EL BIN TIENE %d empleados\n",b);
-	 */
-
 	int estado=-1;
 	FILE* pFileBin;
 	Employee* pAuxiliarEmployee;
@@ -296,18 +278,39 @@ int controller_shotdown(LinkedList* pLinkedListEmpleados,int estadoBin,int estad
 {
 	int retorno=-1;
 	int opcion;
+	int opciondos;
 	if(pLinkedListEmpleados!=NULL)
 	{
-		pedirInt(&opcion,"PARA SALIR INGRESE UN NUMERO .\nSI NO DESEA GUARDAR LOS CAMBIOS INGRESE 10", "Ingrese un numero entre 1 y 10\n'10' PARA NO GUARDAR",MINIMO,MAXIMO,INTENTOS);
-		if(opcion!=10)
+		pedirInt(&opcion,"PARA SALIR SIN GRABAR INGRESA '1'.\nSI DESEAS GRABAR LOS CAMBIOS INGRESA '10'", "ERROR-Para Salir sin Grabar Ingrese 1 a 9\nPARA GUARDAR Ingresa 10",MINIMO,MAXIMO,INTENTOS);
+		if(opcion==10)
 			{
 				if((estadoBin==0||estadoCsv==0))
 					{
-					controller_saveAsText("Midata.csv",pLinkedListEmpleados);
-					controller_saveAsBinary("Midata.bin",pLinkedListEmpleados);
+					controller_saveAsText("data.csv",pLinkedListEmpleados);
+					controller_saveAsBinary("data.bin",pLinkedListEmpleados);
 					puts("SE HA GURDADO TODA LA INFORMACION");
 					}else
-						puts("Se debe cargar la lista antes de poder grabar");
+						{
+							puts("CUIDADO - No se ha cargado la lista desde archivo");
+							puts("Si guarda sin Cargar el Archivo Se perdera el contenido del mismo");
+							puts("Para Cargar la lista del archivo y luego Grabar ingrese '1' - (SE CARGARA LA LISTA DESDE EL ARCHIVO Y GRABARA)");
+							puts("Para Grabar sin cargar el archivo ingrese '2' - (CUIDADO SOLO SE GRABARA LA LISTA ACTUAL)");
+							puts("Para salir sin grabar ingrese '3' - (CUIDADO SE PERDERA LA LISTA ACTUAL");
+							pedirInt(&opciondos,"Ingrese OPCION","ERROR-Ingrese entre 1 y 3",MINIMO,INTENTOS,INTENTOS);
+							if(opciondos==1)
+							{
+								controller_loadFromText("data.csv",pLinkedListEmpleados);
+								controller_saveAsText("data.csv",pLinkedListEmpleados);
+								controller_saveAsBinary("data.bin",pLinkedListEmpleados);
+								puts("SE HA GURDADO TODA LA INFORMACION");
+							}else if(opciondos==2)
+							{
+								controller_saveAsText("data.csv",pLinkedListEmpleados);
+								controller_saveAsBinary("data.bin",pLinkedListEmpleados);
+							}else
+								puts("SE PERDIDO LA LISTA ACTUAL");
+						}
+
 			}
 	ll_deleteLinkedList(pLinkedListEmpleados);
 	retorno=0;
@@ -336,8 +339,9 @@ int controller_ListOneEmployee(LinkedList* pLinkedListEmpleados, int posicion)
     }
 return retorno;
 }
+//========================================================================================================
 /*
- * brief cuenta los empleados en el archivo data.csv (modo texto).
+ * brief cuenta los empleados en el archivo *.csv (modo texto).
  * param *char path de archivo
  * return cantidad de empleados si lo logro la carga y -1 si salio mal
  */
@@ -359,7 +363,7 @@ int controller_countEmployeeFromText(char* path)
 return retorno;
 }
 /*
- * brief cuenta los empleados desde el archivo data.csv (modo binario).
+ * brief cuenta los empleados desde el archivo *.bin (modo binario).
  * param param *char path
  * return cantidad de empleados si lo logro la carga y -1 si salio mal
  */
@@ -381,3 +385,4 @@ int controller_countEmployeeFromBinary(char* path)
 		puts("Parametros erroneos");
 return estado;
 }
+//==============================================================================================================
