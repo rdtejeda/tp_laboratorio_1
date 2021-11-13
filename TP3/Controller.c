@@ -327,7 +327,7 @@ int controller_ListOneEmployee(LinkedList* pLinkedListEmpleados, int posicion)
     int retorno=-1;
 	Employee* pAuxiliarEmployee;
 	char buffername[128];
-    if(pLinkedListEmpleados!=NULL)
+    if(pLinkedListEmpleados!=NULL && posicion>=0)
     {
     	imprimirEncabezado();
     	pAuxiliarEmployee=ll_get(pLinkedListEmpleados,posicion);

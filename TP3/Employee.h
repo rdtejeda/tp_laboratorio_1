@@ -27,6 +27,7 @@ int employee_getRetSueldo(Employee* this);
 
 int employee_findByName(LinkedList* listEmployees, char name[]);
 int dameUnIdNuevoEmployee(void);
+int employee_dameMayorID(void);
 int employee_modify(LinkedList* listEmployees);
 int employee_findPositionBy(LinkedList* pArrayListEmployee);
 //YO

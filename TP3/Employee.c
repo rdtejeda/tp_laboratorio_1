@@ -15,6 +15,7 @@
 #define INTENTOS 3
 #define MAXIMOHORAS 300
 #define MAXIMOSUELDO 500000
+#define MAXIMOID 999
 
 /**
 * \brief reserva de forma dinamica memoria para un dato tipo Employee
@@ -83,8 +84,11 @@ int employee_findById(LinkedList* pLinkedListEmpleados, int id)
 				pAuxiliarEmployee=ll_get(pLinkedListEmpleados, i);
 				if(pAuxiliarEmployee->id==id)
 				{
-					posicion=i;
-					break;
+					if(pAuxiliarEmployee!=NULL)
+					{
+						posicion=i;
+						break;
+					}
 				}
 			}
 		retorno=posicion;
@@ -107,8 +111,7 @@ int employee_modify(LinkedList* pLinkedListEmpleados)
 		if(pLinkedListEmpleados!=NULL)
 			{
 			posicion=employee_findPositionBy(pLinkedListEmpleados);
-			printf("%d\n",posicion);
-			if(posicion>=0)
+			if(posicion>=0 && ll_get(pLinkedListEmpleados,posicion)!=NULL)
 				{
 				puts("El empleado selecionado es");
 				controller_ListOneEmployee(pLinkedListEmpleados, posicion);
@@ -138,7 +141,8 @@ int employee_modify(LinkedList* pLinkedListEmpleados)
 						}
 					}while(opcion!=4);
 				retorno=0;
-				}
+				}else
+					puts("El empleado no fue encotrado");
 			}
 return retorno;
 }
@@ -166,7 +170,6 @@ int employee_findByName(LinkedList* pLinkedListEmpleados, char name[])
 					break;
 				}
 			}
-		puts("El Nombre no fue encontrado");
 		}
 return retorno;
 }
@@ -384,14 +387,14 @@ return retorno;
 /**
   * \brief me da un id consecutivo y no repetido memorizando el ultimolvalor
   * \param void
-  * \return Retorna nuevo id si todo bien  y -1 si no lofro
+  * \return Retorna nuevo id si todo bien  y -1 si no logro
   */
 int dameUnIdNuevoEmployee(void)
 {
 	//TEMPORAL se Ejcutó una sola vez al principio
 	/*
 	int* id;
-	int bufferint=999;
+	int bufferint=MAXIMOID;
 	int cantidadt;
 	id=&bufferint;
 	FILE* pFileBinTemp;
@@ -433,6 +436,30 @@ int dameUnIdNuevoEmployee(void)
 			puts("No se ha podido inizilizar el archivo");
 	return estado;
 }
+/**
+  * \brief me da el id mas grande
+  * \param void
+  * \return Retorna mayor id si todo bien  y -1 si no lo logro
+  */
+int employee_dameMayorID(void)
+{
+	int mayorId=-1;
+	int bufferId;
+	int* contador;
+	contador=&bufferId;
+	FILE* pFileBin;
+	pFileBin=fopen("UltimoId.bin","r");
+	if(pFileBin!=NULL)
+		{
+		fread(contador,sizeof(int),1,pFileBin);
+		fclose(pFileBin);
+		bufferId=*contador;
+		contador=&bufferId;
+		mayorId=bufferId;
+			}else
+				puts("No se ha podido abrir el archivo");
+return mayorId;
+}
 /*
  * brief permite selecionar un employe por id o nombre
  * brief imprime el menu y pide opcio
@@ -453,7 +480,7 @@ int employee_findPositionBy(LinkedList* pLinkedListEmpleados)
 	  	  switch(opcion)
 				{
 					case 1:
-					   pedirInt(&id,"Ingres Id de empleado","Ingres Id valido",MINIMO,10000000,INTENTOS);
+					   pedirInt(&id,"Ingres Id de empleado","Ingres Id valido",MINIMO,employee_dameMayorID(),INTENTOS);
 					   posicion=employee_findById(pLinkedListEmpleados,id);
 					   break;
 					case 2:
@@ -477,14 +504,15 @@ int employee_remove(LinkedList* pLinkedListEmpleados)
 	if(pLinkedListEmpleados!=NULL)
 		{
 		posicion=employee_findPositionBy(pLinkedListEmpleados);
-		if(posicion>=0)
+		if(posicion>=0 && ll_get(pLinkedListEmpleados,posicion)!=NULL )
 			{
-
+			puts("Se ha dado de baja al empleado");
+			controller_ListOneEmployee(pLinkedListEmpleados,posicion);
 			free(ll_get(pLinkedListEmpleados,posicion));
 			ll_remove(pLinkedListEmpleados,posicion);
 			retorno=0;
-			printf("Ha sido dada de baja el empleado en posicin %d\n",posicion);
-			}
+			}else
+				puts("El empleado no fue encotrado");
 		}
 return retorno;
 }
