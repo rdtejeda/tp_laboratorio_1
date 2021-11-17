@@ -226,13 +226,10 @@ return returnAux;
 int ll_clear(LinkedList* this)
 {
     int returnAux=-1;
-    Node* pNodoAux;
     if(this!=NULL)
 		{
-		pNodoAux=this->pFirstNode;
 		for (int index=0;  index<ll_len(this); ++index)
 			{
-			pNodoAux=pNodoAux->pNextNode;
 			ll_remove(this, index);
 			}
 			returnAux=0;
