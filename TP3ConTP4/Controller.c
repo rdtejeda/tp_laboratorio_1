@@ -311,10 +311,9 @@ int controller_shotdown(LinkedList* pLinkedListEmpleados,int estadoBin,int estad
 								puts("SE PERDIDO LA LISTA ACTUAL");
 
 						}
-				//fcloseall();
-			}
+				}
+	employee_removeAllList(pLinkedListEmpleados);
 	ll_deleteLinkedList(pLinkedListEmpleados);
-
 	retorno=0;
 	}
 return retorno;

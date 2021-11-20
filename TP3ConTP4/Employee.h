@@ -41,6 +41,7 @@ int employee_setSueldoChar(Employee* this,char* sueldo);
 
 int employee_findById(LinkedList* listEmployees, int id);
 int employee_remove(LinkedList* pArrayListEmployee);
+int employee_removeAllList(LinkedList* pLinkedListEmpleados);
 
 int employee_Criterio_ShortBySueldo(void* pVoidUno, void* pVoidCero);
 int employee_Criterio_ShortByID(void* pVoidUno, void* pVoidCero);

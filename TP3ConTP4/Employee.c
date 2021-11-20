@@ -614,3 +614,26 @@ int employee_Criterio_ShortByName(void* pVoidUno, void* pVoidCero)
 		}
 return retorno;
 }
+/*
+ * brief permite eliminar todos los employee y los espacios de memiria asiganados
+ * param *pLinkedListEmpleados a LinkedList
+ * return o si todo bien y -1 si salio mal
+ */
+int employee_removeAllList(LinkedList* pLinkedListEmpleados)
+{
+	int retorno=-1;
+	Node* auxNode;
+	Employee* auxEmployee;
+	auxNode=pLinkedListEmpleados->pFirstNode;
+	if(pLinkedListEmpleados!=NULL)
+		{
+		for (int j = 0; j < ll_len(pLinkedListEmpleados); ++j)
+			{
+			auxEmployee=auxNode->pElement;
+			free(auxEmployee);
+			auxNode=auxNode->pNextNode;
+			}
+		retorno=0;
+		}
+return retorno;
+}

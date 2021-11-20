@@ -154,7 +154,7 @@ void* ll_get(LinkedList* this, int index)
 {
 	void* returnAux=NULL;
 	Node* pNodoAux;
-	if(this!=NULL && index>=0 && index<ll_len(this)) // && ll_len(this)>0
+	if(this!=NULL && index>=0 && index<ll_len(this))
 		{
 		pNodoAux=getNode(this,index);
 		returnAux=pNodoAux->pElement;
