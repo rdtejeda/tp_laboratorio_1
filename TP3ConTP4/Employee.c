@@ -630,7 +630,7 @@ int employee_removeAllList(LinkedList* pLinkedListEmpleados)
 		for (int j = 0; j < ll_len(pLinkedListEmpleados); ++j)
 			{
 			auxEmployee=auxNode->pElement;
-			free(auxEmployee);
+			employee_delete(auxEmployee);
 			auxNode=auxNode->pNextNode;
 			}
 		retorno=0;
