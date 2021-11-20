@@ -57,7 +57,10 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
 //MAP: Permite Transformar los elementos de una lista [YASTA]
 int ll_map(LinkedList* this, void (*pFunc)(void*));
 
-//FILTER: Filtra todos los elementos que cumplan la condicion implementada por la funcion dada
+//FILTER CREANDO NUEVA LISTA ORIGINAL
+LinkedList* ll_filterNewList(LinkedList* this, int (*pFunc)(void*));
+
+//FILTER ELIMINADO SOBRE LISTA ORIGINAL
 int ll_filter(LinkedList* this, int (*pFunc)(void*));
 
 //REDUCE	: Ejecuta una funcion reductora sobre cada elemento, devolviendo como unico resultado un unico valor

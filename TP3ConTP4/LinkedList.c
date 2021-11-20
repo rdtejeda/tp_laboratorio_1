@@ -508,27 +508,69 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
 		}
 return returnAux;
 }
-//FILTER	: Filtra todos los elementos que cumplan la condicion implementada por la funcion dada
-int ll_filter(LinkedList* this, int (*pFunc)(void*))
+/** \brief FILTER CREANDO NUEVA LISTA ORIGINAL
+ * Filtra todos los elementos que cumplan la condicion implementada por la funcion dada
+ * utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \return int Retorna  (NULL) Error: si el puntero a la listas
+ * y/o el puntero a funcion y/o el puntero a la nueva linkedllist son NULL
+   y el *ListaFiltrada Si lo logro hace
+ */
+LinkedList* ll_filterNewList(LinkedList* this, int (*pFunc)(void*))
 {
-	int returnAux=-1;
 	int criterio;
 	void* pElement;
-		if(this != NULL && pFunc != NULL)
+	LinkedList* listaFilter=ll_newLinkedList();
+	if(this != NULL && pFunc != NULL && listaFilter!=NULL)
+		{
+		for(int i = 0; i< ll_len(this); i++)
 			{
-			for(int i = 0; i< ll_len(this); i++)
+			pElement = ll_get(this,i);
+			if(pElement != NULL)
 				{
-				pElement = ll_get(this, i);
-				if(pElement != NULL)
+				criterio=pFunc(pElement);//FILTRO
+				if(criterio==1)
 					{
-					criterio=pFunc(pElement);//FILTRO
-					if(criterio==0)
-						{
-						returnAux=ll_remove(this, i);
-						}
+					ll_add(listaFilter, pElement);
 					}
 				}
 			}
+		}else
+			{
+			listaFilter=NULL;
+			}
+return listaFilter;
+}
+/** \brief FILTER ELIMINADO SOBRE LISTA ORIGINAL
+ * Filtra todos los elementos que cumplan la condicion implementada por la funcion dada
+ * utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \return int Retorna  (-1) Error: si el puntero a la listas
+ * y/o el puntero a funcion y/o el puntero a la nueva linkedllist son NULL
+                        ( 0) Si logro hacer el filter
+ */
+int ll_filter(LinkedList* this, int (*pFunc)(void*))
+{
+int returnAux=-1;
+int criterio;
+void* pElement;
+	if(this != NULL && pFunc != NULL)
+		{
+		for(int i = 0; i< ll_len(this); i++)
+			{
+			pElement = ll_get(this, i);
+			if(pElement != NULL)
+				{
+				criterio=pFunc(pElement);//FILTRO
+				if(criterio==0)
+					{
+					returnAux=ll_remove(this, i);
+					}
+				}
+			}
+		}
 return returnAux;
 }
 //REDUCE: Ejecuta una funcion reductora sobre cada elemento, devolviendo como unico resultado un unico valor
