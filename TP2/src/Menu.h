@@ -11,5 +11,7 @@
 void imprimirMenuInicial();
 void imprimirMenuInformes();
 void imprimirMenuModificar();
+void encabezadoLista();
+void linea();
 
 #endif /* MENU_H_ */

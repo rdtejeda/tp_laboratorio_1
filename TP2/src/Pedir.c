@@ -21,7 +21,7 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 50000
+#define SALMIN 1000
 #define SALMAX 500000
 
 static int dameUnIdNuevo();
@@ -45,28 +45,28 @@ int loadAddEmployee(eEmployee *plistEmployee, int len)
 		puts("Estamos por dar de alta un nuevo empleado, por favor ingrese los datos solicitados");
 			do
 				{
-					id=dameUnIdNuevo();
-					if(id>0)
+				if(pedirNombre(name, sizeof(name), "Ingrese Nombre", "Error El NOMBRE debe empezar con mayuscula y solo letras", INTENTOS)==0)
 					{
-						if(pedirNombre(name, sizeof(name), "Ingrese Nombre", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
+					if (pedirNombre(lastName, sizeof(lastName), "Ingrese Apellido", "Error El Apellido debe empezar con mayuscula y solo letras", INTENTOS)==0)
 						{
-							if (pedirNombre(lastName, sizeof(lastName), "Ingrese Apellido", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
+						if(pedirFloat(&salary, "Ingrese salario", "ERROR _Ingrese monto valido\nEntre 1000 y 500000", SALMIN, SALMAX, INTENTOS)==0)
 							{
-								if(pedirFloat(&salary, "Ingrese salario", "ERROR _Ingrese monto valido\nEntre 50000 y 500000", SALMIN, SALMAX, INTENTOS)==0)
+							if(pedirInt(&sector, "Ingrese sector", "Opciones entre 1 y 5", MINIMO, MAXIMO, INTENTOS)==0)
 								{
-									if(pedirInt(&sector, "Ingrese sector", "Opciones entre 1 y 5", MINIMO, MAXIMO, INTENTOS)==0)
+								id=dameUnIdNuevo();
+								if(id>0)
 									{
-										retornoAddEmplyee=addEmployee(plistEmployee, NOMINA_EMP, id, name, lastName, salary, sector);
+									retornoAddEmplyee=addEmployee(plistEmployee, NOMINA_EMP, id, name, lastName, salary, sector);
 									}else
-										puts("No ingreso un sector corecto");
+										puts("No se a podido otrorgar un Id corecto");
 								}else
-									puts("No ingreso salario corecto");
+									puts("No ingreso un sector corecto");
 							}else
-								puts("No ingreso un Apellido corecto, debe comenzar con mayusculas y no comntener numeros");
+								puts("No ingreso salario corecto");
 						}else
-							puts("No ingreso un Nombre corecto,debe comenzar con mayusculas y no comntener numeros");
+							puts("No ingreso un Apellido corecto, debe comenzar con mayusculas y solo letras");
 					}else
-						puts("No se a podido otrorgar un Id corecto");
+						puts("No ingreso un Nombre corecto,debe comenzar con mayusculas y solo letras");
 				}while(retornoAddEmplyee!=0);
 		}else
 			{
@@ -84,10 +84,13 @@ int loadRemoveEmployee(eEmployee *plistEmployee, int len)
 {
 	int retorno=-1;
 	int idBaja;
-	printEmployees(plistEmployee, NOMINA_EMP);
-	pedirInt(&idBaja, "Ingrese el Id a dar de baja", "Ingrese ID valido", MINIMO, NOMINA_EMP, INTENTOS);
-	removeEmployee(plistEmployee, NOMINA_EMP,idBaja);
-	printEmployees(plistEmployee, NOMINA_EMP);
+	if(plistEmployee!=NULL && len>0)
+		{
+		printEmployees(plistEmployee, NOMINA_EMP);
+		pedirInt(&idBaja, "Ingrese el Id a dar de baja", "Ingrese ID valido", MINIMO, NOMINA_EMP, INTENTOS);
+		removeEmployee(plistEmployee, NOMINA_EMP,idBaja);
+		retorno=0;
+		}
 
 	return retorno;
 }

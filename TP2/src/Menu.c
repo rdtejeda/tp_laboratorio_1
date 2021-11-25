@@ -56,3 +56,14 @@ void imprimirMenuModificar()
 	puts("4- Modificar Sector");
 	puts("5- SALIR DE CAMBIOS");
 }
+void encabezadoLista()
+{
+	printf("==============================================================================\n");
+	printf("Id Nombre\t\tApellido\t\tSalario\t     Sector\tIsEmty\n");
+	printf("==============================================================================\n");
+}
+void linea()
+{
+	printf("==============================================================================\n");
+}
+

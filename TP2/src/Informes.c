@@ -25,7 +25,7 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 50000
+#define SALMIN 1000
 #define SALMAX 500000
 
 /**
@@ -58,16 +58,10 @@ int pedirLista(eEmployee *Employee, int len)
 int operarSalarios_2(eEmployee *Employee, int len)
 {
 	int retorno=-1;
-	float sumSalary;
-	float promSalary;
-	int overProm;
-
-	if(operateSalaryEmployees(Employee, NOMINA_EMP, &sumSalary, &promSalary, &overProm)==0 && Employee!=NULL && len>0)
+	if(Employee!=NULL && len>0)
 		{
-			printf("\n\nLa Suma de los salarios es %.2f\n\nEl Promedio de salarios %.2f\n\n"
-					"La cantidad de salarios que superan el promedio es %d\n\n",sumSalary,promSalary,overProm);
-			retorno=0;
-		}else
-			puts("No se han podido calcular los datos");
-	return retorno;
+		operateSalaryEmployees(Employee,NOMINA_EMP);
+		retorno=0;
+		}
+return retorno;
 }

@@ -21,7 +21,7 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 50000
+#define SALMIN 1000
 #define SALMAX 500000
 
 /**
@@ -193,9 +193,7 @@ int printEmployees(eEmployee *plistEmployee,int len)
 {
 		int estado=-1;
 		int contadordeCargados=0;
-		printf("==============================================================================\n");
-		printf("Id Nombre\t\tApellido\t\tSalario\t     Sector\tIsEmty\n");
-		printf("==============================================================================\n");
+		encabezadoLista();
 		if (plistEmployee!=NULL && len>0)
 		{
 			for (int i= 0;  i< len; i++)
@@ -212,7 +210,7 @@ int printEmployees(eEmployee *plistEmployee,int len)
 					puts("NO HAY DIPLAYS CARGADOS");
 				}
 		}
-		printf("==============================================================================\n");
+		linea();
 		estado=0;
 	return estado;
 }
@@ -231,7 +229,6 @@ int printEmployees(eEmployee *plistEmployee,int len)
 	 char bufferName[51];
 	 float bufferSalary;
 	 int opcion;
-	// eEmployee auxiliar;
 	 if(plistEmployee!=NULL && len>0)
 		 {
 		 printEmployees(plistEmployee, NOMINA_EMP);
@@ -250,23 +247,21 @@ int printEmployees(eEmployee *plistEmployee,int len)
 					 switch (opcion)
 					 {
 						case 1:
-							if(pedirNombre(bufferName, sizeof(bufferName), "Ingrese Nombre", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
-							//pedirNombre(bufferName, sizeof(auxiliar.name), "Ingrese Nombre", "Ingrese Nombre valido",INTENTOS)==0)
+							if(pedirNombre(bufferName, sizeof(bufferName), "Ingrese Nombre", "Error El NOMBRE debe empezar con mayuscula y solo letras", INTENTOS)==0)
 							{
 								strncpy(plistEmployee[posicion].name, bufferName, sizeof(plistEmployee->name));
 							}else
 								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						case 2:
-							if(pedirNombre(bufferLastName, sizeof(bufferLastName), "Ingrese Apellido", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
-							//(pedirNombre(bufferLastName, sizeof(auxiliar.lastName), "Ingrese Apellido", "Ingrese Apellido valido", INTENTOS)==0)
+							if(pedirNombre(bufferLastName, sizeof(bufferLastName), "Ingrese Apellido", "Error El Apellido debe empezar con mayuscula y solo letras", INTENTOS)==0)
 							{
 								strncpy(plistEmployee[posicion].lastName, bufferLastName, sizeof(plistEmployee->lastName));
 							}else
 								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						case 3:
-							if(pedirFloat(&bufferSalary, "Ingrese salario", "Ingrese monto valido", SALMIN, SALMAX, INTENTOS)==0)
+							if(pedirFloat(&bufferSalary, "Ingrese salario", "Ingrese monto valido entre 1000 y 500000", SALMIN, SALMAX, INTENTOS)==0)
 							{
 								plistEmployee[posicion].salary=bufferSalary;
 							}else
@@ -296,14 +291,15 @@ int printEmployees(eEmployee *plistEmployee,int len)
  * \param *overProm paso por referencia la cantidad de empleados que cobran sobre el promedio
  * \return Retorna -1 si no pudo hacer los calculos y 0 todo bien
  */
- int operateSalaryEmployees(eEmployee *plistEmployee,int len,float *totalSalary, float *promSalary, int *overProm)
+ int operateSalaryEmployees(eEmployee *plistEmployee,int len)
  {
 	 int retorno=-1;
 	 float sumSalary=0;
 	 int contSalary=0;
 	 int contOverProm=0;
 	 float promedioSal;
-	 if(plistEmployee!=NULL && len>0)
+	 eEmployee employeesSobrePromedio[NOMINA_EMP];
+	 if(plistEmployee!=NULL && len>0 && initEmployees(employeesSobrePromedio,NOMINA_EMP)==0)
 	 {
 		 for (int i=0; i<len; i++)
 		 {
@@ -314,16 +310,22 @@ int printEmployees(eEmployee *plistEmployee,int len)
 			 }
 		 }
 		  promedioSal=sumSalary/contSalary;
-		 *promSalary=promedioSal;
 		 for (int j=0; j< len; j++)
 		 {
 			 if(plistEmployee[j].salary>promedioSal)
 			 {
-			 contOverProm++;
+				 employeesSobrePromedio[contOverProm]=plistEmployee[j];
+				 contOverProm++;
 			 }
 		 }
-		 *totalSalary=sumSalary;
-		 *overProm=contOverProm;
+		 printf("\n\nLa Suma de los salarios es %.2f\n\nEl Promedio de salarios %.2f\n\n"
+		 "La cantidad de salarios que superan el promedio es %d\n\n",sumSalary,promedioSal,contOverProm);
+		 if (contOverProm>0)
+		 	 {
+			  puts("La nomina de empleados que ganan mas que el promedio es la siguienrte");
+			  printEmployees(employeesSobrePromedio,contOverProm);
+		 	 }
+
 		 retorno=0;
 	}
 	 return retorno;

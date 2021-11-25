@@ -25,23 +25,19 @@
 #define MINIMO 1
 #define MAXIMO 5
 #define INTENTOS 3
-#define SALMIN 50000
+#define SALMIN 10000
 #define SALMAX 500000
 
 int main(void)
 {
-	eEmployee employees[NOMINA_EMP];
-	int retornoInit;
 	int menuInicial;
 	int menuInformes;
-	int flagListaInit;
-	retornoInit=initEmployees(employees, NOMINA_EMP);
-	if (retornoInit==0)
+	eEmployee employees[NOMINA_EMP];
+	if(initEmployees(employees, NOMINA_EMP)==0)
 	{
 		do
 		{
 			imprimirMenuInicial();
-			flagListaInit=listlong(employees, NOMINA_EMP);
 			pedirInt(&menuInicial, "Ingese la opcion deseada", "Opciones entre 1 y 5", MINIMO, MAXIMO, INTENTOS);
 			switch (menuInicial)
 			{
@@ -53,21 +49,21 @@ int main(void)
 						puts("La carga no fue posible, intentelo nuevamente");
 					break;
 				case 2:
-					if(flagListaInit>0)
+					if(listlong(employees, NOMINA_EMP)>0)
 					{
 						modifyOneEmploye(employees, NOMINA_EMP);
 					}else
 						puts(" ¡CUIDADO! No hay cargado ningun empleado");
 					break;
 				case 3:
-					if(flagListaInit>0)
+					if(listlong(employees, NOMINA_EMP)>0)
 					{
 						loadRemoveEmployee(employees, NOMINA_EMP);
 					}else
 						puts(" ¡CUIDADO! No hay ha cargado ningun empleado");
 					break;
 				case 4:
-					if(flagListaInit>0)
+					if(listlong(employees, NOMINA_EMP)>0)
 					{
 						do
 						{
@@ -89,7 +85,7 @@ int main(void)
 						puts("¡CUIDADO! No hay cargado ningún empleado");
 					break;
 				case 5:
-					pedirInt(&menuInicial, "CONFIRME QUE DESEA ABANDONAR LA NOMINA INGRESANDO 5 sino ingrese 1", "Opciones entre 1 y 5",MINIMO, MAXIMO, INTENTOS);
+					pedirInt(&menuInicial, "CONFIRME QUE DESEA ABANDONAR LA NOMINA INGRESANDO 5 sino ingrese Opcion deseada", "Opciones entre 1 y 5",MINIMO, MAXIMO, INTENTOS);
 					break;
 				default:
 					break;
