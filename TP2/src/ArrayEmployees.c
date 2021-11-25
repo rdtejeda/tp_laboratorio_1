@@ -231,7 +231,7 @@ int printEmployees(eEmployee *plistEmployee,int len)
 	 char bufferName[51];
 	 float bufferSalary;
 	 int opcion;
-	 eEmployee auxiliar;
+	// eEmployee auxiliar;
 	 if(plistEmployee!=NULL && len>0)
 		 {
 		 printEmployees(plistEmployee, NOMINA_EMP);
@@ -250,14 +250,16 @@ int printEmployees(eEmployee *plistEmployee,int len)
 					 switch (opcion)
 					 {
 						case 1:
-							if(pedirText(bufferName, sizeof(auxiliar.name), "Ingrese Nombre", "Ingrese Nombre valido",INTENTOS)==0)
+							if(pedirNombre(bufferName, sizeof(bufferName), "Ingrese Nombre", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
+							//pedirNombre(bufferName, sizeof(auxiliar.name), "Ingrese Nombre", "Ingrese Nombre valido",INTENTOS)==0)
 							{
 								strncpy(plistEmployee[posicion].name, bufferName, sizeof(plistEmployee->name));
 							}else
 								puts("Hubo un problema con la carga, intentelo nuevamente");
 							break;
 						case 2:
-							if(pedirText(bufferLastName, sizeof(auxiliar.lastName), "Ingrese Apellido", "Ingrese Apellido valido", INTENTOS)==0)
+							if(pedirNombre(bufferLastName, sizeof(bufferLastName), "Ingrese Apellido", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
+							//(pedirNombre(bufferLastName, sizeof(auxiliar.lastName), "Ingrese Apellido", "Ingrese Apellido valido", INTENTOS)==0)
 							{
 								strncpy(plistEmployee[posicion].lastName, bufferLastName, sizeof(plistEmployee->lastName));
 							}else

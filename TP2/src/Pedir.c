@@ -48,20 +48,25 @@ int loadAddEmployee(eEmployee *plistEmployee, int len)
 					id=dameUnIdNuevo();
 					if(id>0)
 					{
-						if(pedirText(name, sizeof(name), "Ingrese Nombre", "Ingrese Nombre valido", INTENTOS)==0)
+						if(pedirNombre(name, sizeof(name), "Ingrese Nombre", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
 						{
-							if (pedirText(lastName, sizeof(lastName), "Ingrese Apellido", "Ingrese Apellido valido", INTENTOS)==0)
+							if (pedirNombre(lastName, sizeof(lastName), "Ingrese Apellido", "Error El NOMBRE debe empezar con mayuscula", INTENTOS)==0)
 							{
-								if(pedirFloat(&salary, "Ingrese salario", "Ingrese monto valido", SALMIN, SALMAX, INTENTOS)==0)
+								if(pedirFloat(&salary, "Ingrese salario", "ERROR _Ingrese monto valido\nEntre 50000 y 500000", SALMIN, SALMAX, INTENTOS)==0)
 								{
 									if(pedirInt(&sector, "Ingrese sector", "Opciones entre 1 y 5", MINIMO, MAXIMO, INTENTOS)==0)
 									{
 										retornoAddEmplyee=addEmployee(plistEmployee, NOMINA_EMP, id, name, lastName, salary, sector);
-									}
-								}
-							}
-						}
-					}
+									}else
+										puts("No ingreso un sector corecto");
+								}else
+									puts("No ingreso salario corecto");
+							}else
+								puts("No ingreso un Apellido corecto, debe comenzar con mayusculas y no comntener numeros");
+						}else
+							puts("No ingreso un Nombre corecto,debe comenzar con mayusculas y no comntener numeros");
+					}else
+						puts("No se a podido otrorgar un Id corecto");
 				}while(retornoAddEmplyee!=0);
 		}else
 			{
@@ -117,6 +122,42 @@ int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int 
 				}
 		}
 	}
+	return retorno;
+}
+/**
+* \brief pide un texto al ususario
+* \param *pResultado, len tamaño del array, *mensaje, *mensajeError, intentos
+* \return Retorna -1  salio mal, 0 salio bien
+*/
+int pedirNombre(char *pResultado, int len, char *mensaje, char *mensajeError, int intentos)
+{
+	int retorno = -1;
+	int i;
+	char bufferCadenaAux[128];
+	if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && intentos >= 0)
+	{
+		for(i=0; i<=intentos; i++)
+		{
+			printf("\n%s\n", mensaje);
+			__fpurge(stdin);
+			if(myGets(bufferCadenaAux,sizeof(bufferCadenaAux))==0  && strlen(bufferCadenaAux)>0)
+			{
+				strncpy(pResultado, bufferCadenaAux,len);
+				if (esNombre(pResultado)==0)
+				{
+					retorno = 0;
+				break;
+				}else
+				{
+					printf("%s\n", mensajeError);
+				}
+			}else
+				{
+					printf("%s\n", mensajeError);
+				}
+		}
+	}else
+		 puts("No se ha podido procesar");
 	return retorno;
 }
 /**
@@ -343,6 +384,49 @@ int esAlfaumerica(char *cadena)
 				i++;
 			}
 	}
+	return retorno;
+}
+/**
+* \brief Verifica si la cadena ingresada es alfabetica
+* \param *cadena Paso por referencia Cadena de caracteres a ser analizada
+* \return Retorna 0 si la cadena es alfa numerica y -1 si no lo es
+*/
+int esNombre(char *cadena)
+{
+	int i=0;
+	int retorno = 0;
+	if(cadena != NULL)
+	{
+		while(cadena[i]!='\0')
+			{
+				if((cadena[i]<'A'||cadena[i]>'Z')&&(cadena[i]<'a'||cadena[i]>'z'))
+					{
+						if (cadena[i]==' ')
+						{
+							if(i==0)
+							{
+								retorno=-1;
+								break;
+							}
+						}else if(cadena[i]=='-')
+							{
+								break;
+							}else
+								{
+									retorno = -1;
+									break;
+								}
+					}
+				if(i==0 && (cadena[i]<'A'||cadena[i]>'Z'))
+					{
+						puts("El nombre debe empezar con mayuscula");
+						retorno=-1;
+						break;
+					}
+				i++;
+			}
+	}else
+		 puts("No se ha podido procesar");
 	return retorno;
 }
 /**

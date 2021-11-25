@@ -18,5 +18,7 @@ int myGets(char *pResultado, int len);
 int esNumericaFloat(char *cadena);
 int pedirFloat(float *pResultado, char *mensaje, char *mensajeError, float minimo, float maximo, int intentos);
 int pedirText(char *pResultado, int len, char *mensaje, char *mensajeError, int intentos);
+int pedirNombre(char *pResultado, int len, char *mensaje, char *mensajeError, int intentos);
+int esNombre(char *cadena);
 
 #endif /* PEDIR_H_ */
