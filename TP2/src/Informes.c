@@ -58,9 +58,8 @@ int pedirLista(eEmployee *Employee, int len)
 int operarSalarios_2(eEmployee *Employee, int len)
 {
 	int retorno=-1;
-	if(Employee!=NULL && len>0)
+	if(Employee!=NULL && len>0 && operateSalaryEmployees(Employee,NOMINA_EMP)==0)
 		{
-		operateSalaryEmployees(Employee,NOMINA_EMP);
 		retorno=0;
 		}
 return retorno;

@@ -324,9 +324,8 @@ int printEmployees(eEmployee *plistEmployee,int len)
 		 	 {
 			  puts("La nomina de empleados que ganan mas que el promedio es la siguienrte");
 			  printEmployees(employeesSobrePromedio,contOverProm);
+			  retorno=0;
 		 	 }
-
-		 retorno=0;
 	}
 	 return retorno;
  }
