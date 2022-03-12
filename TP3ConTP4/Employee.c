@@ -392,7 +392,7 @@ return retorno;
 int dameUnIdNuevoEmployee(void)
 {
 	//TEMPORAL se Ejcutó una sola vez al principio
-	/*
+
 	int id=MAXIMOID;
 	int cantidadt;
 	FILE* pFileBinTemp;
@@ -404,7 +404,7 @@ int dameUnIdNuevoEmployee(void)
 			fclose(pFileBinTemp);
 		}else
 				 puts("No se ha podido inizilizar el archivo");
-	*/
+
 	//TEMPORAL
 	int estado=-1;
 	int contador;

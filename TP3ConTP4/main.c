@@ -24,11 +24,13 @@ int main()
 	int loadCsv=-1;
 	int loadBin=-1;
 	LinkedList* pLinkedListEmpleados=ll_newLinkedList();
-	puts("¡BIENVENIDO A LA APLICACION 'NOMINA DE EMPLEADOS'!");
+	if(pLinkedListEmpleados!=NULL)
+	{
+		puts("¡BIENVENIDO A LA APLICACION 'NOMINA DE EMPLEADOS'!");
         do{
     	option=menuPrincipal();
     	switch(option)
-        {
+        	{
             case 1:
             	if(loadBin==-1&&loadCsv==-1)
             		{
@@ -74,9 +76,10 @@ int main()
                 break;
             default:
              	 break;
-        }
-    }while(option != 10);
-    controller_shotdown(pLinkedListEmpleados,loadBin,loadCsv);
+        	}
+        }while(option != 10);
+        controller_shotdown(pLinkedListEmpleados,loadBin,loadCsv);
+	}
     puts("¡SALIO DE LA APLICACION 'NOMINA DE EMPLEADOS'!");
  return 0;
 }

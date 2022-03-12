@@ -82,33 +82,44 @@ int controller_addEmployee(LinkedList* pLinkedListEmpleados)
 	int idBuffer;
 	int horasTrabajadasBuffer;
 	int sueldoBuffer;
-	Employee* bufferEmployee;
+	Employee* bufferEmployee=NULL;
 	if(pLinkedListEmpleados!=NULL)
 	{
-		idBuffer=dameUnIdNuevoEmployee();
-		sprintf(idStr,"%d",idBuffer);
-		pedirNombre(nombreStr,sizeof(nombreStr),"Ingrese Nombre de Nuevo Empleado","ERROR-Ingrese Texto Correcto",INTENTOS);
-		pedirInt(&horasTrabajadasBuffer, "Ingese Horas Trabajadas", "Ingres numero correcto", MINIMO, MAXIMOHORAS,INTENTOS);
-		sprintf(horasTrabajadasStr,"%d",horasTrabajadasBuffer);
-		pedirInt(&sueldoBuffer, "Ingrese Sueldo", "Ingrese monto correcto",MINIMO,MAXIMOSUELDO,INTENTOS);
-		sprintf(sueldoStr,"%d",sueldoBuffer);
-		bufferEmployee=employee_newParametros(idStr,nombreStr,horasTrabajadasStr,sueldoStr);
+		if(pedirNombre(nombreStr,sizeof(nombreStr),"Ingrese Nombre de Nuevo Empleado","ERROR-Ingrese Texto Correcto",INTENTOS)==0)
+			{
+			if(pedirInt(&horasTrabajadasBuffer, "Ingese Horas Trabajadas", "Ingres numero correcto", MINIMO, MAXIMOHORAS,INTENTOS)==0)
+				{
+				sprintf(horasTrabajadasStr,"%d",horasTrabajadasBuffer);
+				if(pedirInt(&sueldoBuffer, "Ingrese Sueldo", "Ingrese monto correcto",MINIMO,MAXIMOSUELDO,INTENTOS)==0)
+					{
+					sprintf(sueldoStr,"%d",sueldoBuffer);
+					idBuffer=dameUnIdNuevoEmployee();
+					if(idBuffer>=0)
+						{
+						sprintf(idStr,"%d",idBuffer);
+						bufferEmployee=employee_newParametros(idStr,nombreStr,horasTrabajadasStr,sueldoStr);
+						}
+					}else
+						puts("Error al ingresar el Sueldo, intentalo nuevamente, solo numeros");
+				}else
+					puts("Error al ingresar las horas trabajadas, intentalo nuevamente, solo numeros");
+			}else
+				puts("Error al ingresar el Nombre del Empleado, intentalo nuevamente, solo letras y comienza en Mayuscula");
 		if(bufferEmployee!=NULL)
 			{
-			if(!ll_add(pLinkedListEmpleados,bufferEmployee))
+			if(ll_add(pLinkedListEmpleados,bufferEmployee)==0)
 				{
 				puts("Se ha dado de alta al siguiente empleado");
 				controller_ListOneEmployee(pLinkedListEmpleados, ll_indexOf(pLinkedListEmpleados, bufferEmployee));
 				retorno=0;
 				}else
-				puts("No se ha podio agrega a la lista");
+					puts("No se ha podio agrega a la lista");
 			}else
-				puts("No se ha podido agregar a la lista");
+				puts("No se ha podido generar el nuevo empleado");
 	}else
 		puts("La lista no esta iniciada");
 return retorno;
 }
-
 /** \brief Modificar datos de empleado
  * \param pLinkedListEmpleados LinkedList*
  * \return 0 si lo logro la carga y -1 si salio mal
